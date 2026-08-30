@@ -84,7 +84,7 @@ make results
 - `results/hecras_five_cases.csv`：五工况 × 五断面的详细结果；
 - `results/hecras_five_cases_summary.csv`：五工况关键指标汇总。
 
-当前工作区仍缺 `p01.hdf`，所以在重新计算完成前，`results/hecras_steady_four_cases.csv` 与 `results/hecras_design_bed_cad_direct_backwater.csv` 暂时保留作为现有已验证数值。
+p01--p05 已在 HEC-RAS 7.0.1 中使用当前输入统一重新计算，五个 `p##.hdf` 已归档并由同一提取脚本生成最终结果。当前不再使用旧四工况/单独 p05 的过渡结果。
 
 ## 目录
 

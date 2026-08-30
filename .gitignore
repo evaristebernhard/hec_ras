@@ -32,3 +32,13 @@ report/cad_render/
 Thumbs.db
 *~
 .librecad-fonts/
+
+# Windows alternate data stream metadata
+*:Zone.Identifier
+
+# Regenerable CAD/HEC-RAS transients
+data/intermediate/dxf/logs/
+models/boundary_sensitivity/
+models/main/*.log
+models/main/*.g??.hdf
+deliverables/cad/design_bed/#*
