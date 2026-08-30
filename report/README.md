@@ -1,13 +1,12 @@
 # 正式报告
 
-- `main.tex`：唯一活动 LaTeX 源文件；
-- `main.pdf`：正式编译成果；
-- `data/`、`figures/`：由脚本生成并供 LaTeX 引用的表图数据。
+本目录只保留最终报告本身：
 
-重建：
+- `main.tex`：五工况 HEC-RAS 报告源文件；
+- `main.pdf`：与当前报告内容一致的 PDF。
 
-```bash
-make report
-```
+报告主线只有：CAD/实测断面 → HEC-RAS p01–p05 → 五个 HDF → 五工况结果。
 
-该目标先从已验收 HDF 重建结果数据，再生成图件并执行两次 XeLaTeX。LaTeX 临时文件不进入 Git。
+HEC-RAS 是唯一水动力求解器。Python 仅用于整理 CAD/断面和读取 HDF，不参与水动力求解。
+
+当前 PDF 已移除旧三方案、15-plan 下游边界敏感性、Python 标准步法交叉校核及其相关图表。最终归档前，使用当前输入在 HEC-RAS 7.0.1 中重新计算 p01–p05，再更新结果表即可。
