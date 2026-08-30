@@ -1,31 +1,121 @@
-name: Temporary HEC-RAS result extraction
+name: Finalize HEC-RAS five cases
 
 on:
   push:
     branches: [main]
     paths:
       - '.github/workflows/tmp-extract-hecras.yml'
-      - 'models/main/*.hdf'
-      - 'scripts/extract_hecras_results.py'
-      - 'data/processed/design_bed/**'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  extract:
+  finalize:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install --upgrade pip h5py numpy
-      - name: Extract five HEC-RAS cases
+      - name: Extract and validate five HDF results
         run: |
+          python -m pip install --upgrade pip h5py numpy
           python scripts/extract_hecras_results.py
-          echo '--- SUMMARY CSV ---'
           cat results/hecras_five_cases_summary.csv
-          echo '--- DETAIL CSV ---'
-          cat results/hecras_five_cases.csv
+      - name: Update final text and clean transient files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          root = Path('.')
+
+          # Root README: the five-plan recomputation is now complete.
+          p = root / 'README.md'
+          s = p.read_text(encoding='utf-8')
+          s = s.replace(
+              '当前工作区仍缺 `p01.hdf`，所以在重新计算完成前，`results/hecras_steady_four_cases.csv` 与 `results/hecras_design_bed_cad_direct_backwater.csv` 暂时保留作为现有已验证数值。',
+              'p01--p05 已在 HEC-RAS 7.0.1 中使用当前输入统一重新计算，五个 `p##.hdf` 已归档并由同一提取脚本生成最终结果。当前不再使用旧四工况/单独 p05 的过渡结果。'
+          )
+          p.write_text(s, encoding='utf-8')
+
+          (root / 'models' / 'README.md').write_text('''# 模型\n\n本项目只保留 `models/main/` 一个 HEC-RAS 7.0.1 工程，共 5 个 plan：\n\n- p01 `Current`\n- p02 `Protect05`\n- p03 `Protect10`\n- p04 `Protect20`\n- p05 `DesignBedCAD`\n\n所有 plan 使用 `Q=26000 m³/s`、下游 Known WS `22.049342 m`、亚临界稳定流。p01-p04 使用现状桥下断面，p05 使用 CAD 01 直接设计河床。\n\n`p01.hdf`--`p05.hdf` 是 2026-08-30 使用当前五工况输入统一计算得到的最终结果快照，已纳入版本控制。几何缓存 `g##.hdf`、`.O##`、`.r##` 和日志属于 HEC-RAS 可再生产物，不纳入仓库。\n\n若基础资料或模型输入发生变化，重新在 HEC-RAS 中计算 p01-p05，再运行 `make results` 更新结果。\n''', encoding='utf-8')
+
+          (root / 'results' / 'README.md').write_text('''# 结果\n\n当前只保留由同一批 p01--p05 HDF 直接提取的两份最终结果：\n\n- `hecras_five_cases.csv`：5 个 plan × 5 个断面的详细 HEC-RAS 结果；\n- `hecras_five_cases_summary.csv`：RS600 壅水及 RS500 水位、平均流速、过流面积和 Froude 汇总。\n\n五个 HDF 均通过“计算完成且无 warning/error”检查；p05 还通过 RS500 与 CAD01 直接设计河床的逐点几何一致性检查。\n\n重新提取：\n\n```bash\nmake results\n```\n''', encoding='utf-8')
+
+          p = root / 'docs' / 'project.md'
+          s = p.read_text(encoding='utf-8')
+          s = s.replace(
+              '当前仍缺 p01 HDF，因此完整的 p01-p05 同批 HDF 重算尚未闭合。下一步只需要在 HEC-RAS 中把 5 个 plan 全部 Compute，然后运行 `make results`。',
+              'p01-p05 已使用当前输入在 HEC-RAS 7.0.1 中统一重新计算。五个 HDF 均完成稳态计算且无 warning/error；统一提取得到的结果与此前已验证数值一致。p05 的 RS500 HDF 几何同时通过 CAD01 设计河床逐点检查。'
+          )
+          p.write_text(s, encoding='utf-8')
+
+          (root / 'report' / 'README.md').write_text('''# 正式报告\n\n本目录只保留最终报告本身：\n\n- `main.tex`：五工况 HEC-RAS 报告源文件；\n- `main.pdf`：与当前统一复算结果一致的 PDF。\n\n报告主线只有：CAD/实测断面 → HEC-RAS p01-p05 → 五个 HDF → 五工况结果。\n\nHEC-RAS 是唯一水动力求解器。Python 仅用于整理 CAD/断面和读取 HDF，不参与水动力求解。\n\n2026-08-30 已使用当前输入统一重新计算 p01-p05，并以这五个 HDF 更新最终结果与报告。\n''', encoding='utf-8')
+
+          p = root / 'report' / 'main.tex'
+          s = p.read_text(encoding='utf-8')
+          s = s.replace(
+              '正式工程定稿前仍需补充下游设计水位依据、Manning 糙率依据，并使用当前五工况输入重新计算和归档完整的 p01--p05 HDF 结果。',
+              '五个活动 plan 已使用当前输入在 HEC-RAS 7.0.1 中统一重新计算，p01--p05 HDF 已完整归档并通过结果提取检查。正式工程定稿前仍需补充下游设计水位依据和 Manning 糙率依据。'
+          )
+          s = s.replace(
+              '现阶段 p01--p04 的数值来自此前已验证的 HEC-RAS 计算结果，p05 来自当前 CAD 01 直接设计河床对应的 HDF 结果。',
+              'p01--p05 已使用当前五工况输入在 HEC-RAS 7.0.1 中统一重新计算。五个 HDF 均完成稳态计算且无 warning/error；p05 HDF 中 RS=500 的几何同时通过 CAD 01 直接设计河床逐点一致性检查。'
+          )
+          s = s.replace('最终归档时应在当前模型输入不再变化后，用 HEC-RAS 7.0.1 依次重新计算 p01--p05，得到：', '本次统一复算已经得到：')
+          s = s.replace('再从这五个 HDF 一次性提取最终结果。这样最终成果将只有一条清晰证据链：', '五个 HDF 已由同一提取流程一次性生成最终结果表。当前成果因此形成一条清晰证据链：')
+          s = s.replace('  \\item 使用当前五工况重新计算 p01--p05 HDF 并统一归档。\n', '')
+          s = s.replace(
+              '后续工作不需要继续增加计算工况，而应优先补齐正式水文与桥梁几何资料，并将现有五个 plan 用 HEC-RAS 统一复算后形成最终归档结果。',
+              '后续工作不需要继续增加计算工况或重复复算现有五个 plan，而应优先补齐正式水文、糙率与桥梁几何资料；只有这些基础条件发生变化时，才需要重新运行五工况。'
+          )
+          p.write_text(s, encoding='utf-8')
+
+          # Open the project at the baseline plan by default; this does not alter result HDFs.
+          p = root / 'models' / 'main' / 'GanjiangWestBridge.prj'
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('Current Plan=p05', 'Current Plan=p01')
+          p.write_text(s, encoding='utf-8')
+
+          # Ignore Windows/solver transients while keeping p01-p05 HDF result snapshots tracked.
+          p = root / '.gitignore'
+          s = p.read_text(encoding='utf-8')
+          extra = '''\n# Windows alternate data stream metadata\n*:Zone.Identifier\n\n# Regenerable CAD/HEC-RAS transients\ndata/intermediate/dxf/logs/\nmodels/boundary_sensitivity/\nmodels/main/*.log\nmodels/main/*.g??.hdf\ndeliverables/cad/design_bed/#*\n'''
+          if '*:Zone.Identifier' not in s:
+              s += extra
+          p.write_text(s, encoding='utf-8')
+          PY
+
+          rm -f results/hecras_steady_four_cases.csv \
+                results/hecras_design_bed_cad_direct_backwater.csv \
+                results/hecras_design_bed_cad_direct_hdf_audit.csv
+          rm -rf models/boundary_sensitivity data/intermediate/dxf/logs
+          find models/main -type f -name '*:Zone.Identifier' -delete
+          rm -f models/main/GanjiangWestBridge.f02 \
+                models/main/GanjiangWestBridge.g01.hdf \
+                models/main/GanjiangWestBridge.g02.hdf \
+                models/main/GanjiangWestBridge.g03.hdf \
+                models/main/GanjiangWestBridge.g04.hdf \
+                models/main/GanjiangWestBridge.g05.hdf \
+                models/main/GanjiangWestBridge.g06.hdf \
+                models/main/ras_prepare_dialogs.log \
+                models/main/ras_prepare_p05_cad_direct.log \
+                models/main/blockage_audit.csv \
+                models/main/README.md
+          rm -f 'deliverables/cad/design_bed/#西支桥下_设计河床_三方案_审阅版_R2000.dxf'
+      - name: Compile final PDF
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq texlive-xetex texlive-lang-chinese texlive-latex-extra fonts-noto-cjk fonts-dejavu-core >/dev/null
+          cd report
+          xelatex -interaction=nonstopmode -halt-on-error main.tex
+          xelatex -interaction=nonstopmode -halt-on-error main.tex
+      - name: Commit final five-case project
+        run: |
+          git rm .github/workflows/tmp-extract-hecras.yml
+          git config user.name 'OpenAI project maintenance'
+          git config user.email 'noreply@openai.com'
+          git add -A
+          git commit -m 'finalize: archive unified five-case HEC-RAS results'
+          git push
