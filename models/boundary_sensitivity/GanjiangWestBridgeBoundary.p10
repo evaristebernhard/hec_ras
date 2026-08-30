@@ -1,6 +1,6 @@
 Plan Title=DesignBedCAD_Base
 Program Version=7.01
-Short Identifier=DesignBedCAD_Base
+Short Identifier=DBedCAD_Base
 Geom File=g05
 Flow File=f02
 Subcritical Flow
