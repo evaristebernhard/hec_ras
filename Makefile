@@ -2,7 +2,7 @@ PYTHON ?= .venv/bin/python
 LATEXMK ?= latexmk
 MPLCONFIGDIR ?= /tmp/hec_ras_matplotlib
 
-.PHONY: cad-intermediate processed evidence model-inputs audit-hecras-inputs audit-design-bed-hdf extract-results report-data report cad-dxf cad-dwg cad-package verify all
+.PHONY: cad-intermediate processed evidence model-inputs audit-hecras-inputs audit-design-bed-hdf audit-boundary-design-hdf extract-results report-data report cad-dxf cad-dwg cad-package verify all
 
 cad-intermediate:
 	$(PYTHON) scripts/convert_cad_sources.py
@@ -28,8 +28,13 @@ audit-hecras-inputs:
 audit-design-bed-hdf:
 	$(PYTHON) scripts/audit_hecras_design_bed_geometry.py
 
-# Full live-HDF extraction requires p01-p05 HDF files to be present.
-extract-results:
+# Reject old p05/p10/p15 boundary HDFs unless their RS500 geometry matches the
+# active CAD01-direct design bed point-for-point within legacy text precision.
+audit-boundary-design-hdf:
+	$(PYTHON) scripts/audit_hecras_boundary_design_geometry.py
+
+# Full live-HDF extraction requires p01-p05 HDF files plus all 15 boundary HDFs.
+extract-results: audit-boundary-design-hdf
 	$(PYTHON) scripts/extract_hecras_steady_results.py
 	$(PYTHON) scripts/extract_hecras_boundary_sensitivity.py
 
