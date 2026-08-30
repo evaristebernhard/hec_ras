@@ -26,6 +26,21 @@ BOUNDARIES = [
 
 MAIN_CASES = base.CASES[:5]
 
+# HEC-RAS steady-flow plan Short Identifiers are limited to 16 characters.
+# Keep full descriptive Plan Titles, but compact only the case token used in
+# Short Identifier when necessary.
+SHORT_CASE_IDS = {
+    "DesignBedCAD": "DBedCAD",
+}
+
+
+def boundary_short_id(case_id: str, boundary_id: str) -> str:
+    short_case = SHORT_CASE_IDS.get(case_id, case_id)
+    short_id = f"{short_case}_{boundary_id}"
+    if len(short_id) > 16:
+        raise ValueError(f"HEC-RAS Short Identifier exceeds 16 characters: {short_id}")
+    return short_id
+
 
 def plan_text(title: str, short_id: str, geom_number: int, flow_number: int) -> str:
     return "\n".join(
@@ -76,7 +91,8 @@ def project_text(plan_rows: list[dict[str, object]]) -> str:
         "Default Short ID=Plan",
     ]
     for row in plan_rows:
-        lines.extend([f"Plan File={row['plan']}", f"Plan Title={row['short_id']}"])
+        title = f"{row['case_id']}_{row['boundary_id']}"
+        lines.extend([f"Plan File={row['plan']}", f"Plan Title={title}"])
     for case_number, _cn_name, short_id, _blockage, _profile in MAIN_CASES:
         lines.extend([f"Geom File=g{case_number:02d}", f"Geom Title={short_id}"])
     for flow_number, boundary_id, _wse in BOUNDARIES:
@@ -109,9 +125,14 @@ def main() -> None:
             newline="\r\n",
         )
 
-    for flow_number, _boundary_id, downstream_wse in BOUNDARIES:
+    for flow_number, boundary_id, downstream_wse in BOUNDARIES:
         path = OUT_DIR / f"{PROJECT_BASENAME}.f{flow_number:02d}"
-        path.write_text(base.flow_text(downstream_wse), encoding="ascii", newline="\r\n")
+        flow_text = base.flow_text(downstream_wse).replace(
+            "Flow Title=Q26000",
+            f"Flow Title=Q26000_{boundary_id}",
+            1,
+        )
+        path.write_text(flow_text, encoding="ascii", newline="\r\n")
 
     plan_rows: list[dict[str, object]] = []
     plan_number = 0
@@ -119,8 +140,8 @@ def main() -> None:
         for case_number, cn_name, case_id, blockage, _profile_path in MAIN_CASES:
             plan_number += 1
             plan = f"p{plan_number:02d}"
-            short_id = f"{case_id}_{boundary_id}"
-            title = short_id
+            short_id = boundary_short_id(case_id, boundary_id)
+            title = f"{case_id}_{boundary_id}"
             (OUT_DIR / f"{PROJECT_BASENAME}.{plan}").write_text(
                 plan_text(title, short_id, case_number, flow_number),
                 encoding="ascii",
