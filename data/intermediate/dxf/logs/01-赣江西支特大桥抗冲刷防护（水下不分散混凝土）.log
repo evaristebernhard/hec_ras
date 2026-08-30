@@ -1,0 +1,708 @@
+Reading DWG file /home/ubuntu/hec_ras/data/raw/cad/01-赣江西支特大桥抗冲刷防护（水下不分散混凝土）.dwg
+Writing DXF file /home/ubuntu/hec_ras/data/intermediate/dxf/cad-convert-2kij1t4r/01-赣江西支特大桥抗冲刷防护（水下不分散混凝土）.dxf
+Warning: Unstable Class object 504 TABLESTYLE (0xfff) 33/0
+Warning: Unstable Class object 505 MATERIAL (0x481) 45/0
+Warning: Unstable Class object 505 MATERIAL (0x481) 46/0
+Warning: Unstable Class object 505 MATERIAL (0x481) 47/0
+Warning: Ignore invalid handleoff (@436)
+Warning: Unstable Class object 534 RAPIDRTRENDERSETTINGS (0x400) 211/0
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unknown Class object 538 VLO-VL (0x81)
+Warning: Unstable Class object 542 MENTALRAYRENDERSETTINGS (0x400) 243/0
+Warning: Unhandled Class object 548 AEC_VARS_DWG_SETUP (0x81) 294/0
+Warning: Unhandled Class object 549 AEC_DISP_REP_ANCHOR_EXT_TAG_TO_ENT (0x81is_zombie) 297/0
+Warning: Unhandled Class object 550 AEC_DISP_PROPS_ENT (0x81is_zombie) 299/0
+Warning: Unhandled Class object 551 AEC_DISP_REP_ANCHOR_TAG_TO_ENT (0x81is_zombie) 300/0
+Warning: Unhandled Class object 550 AEC_DISP_PROPS_ENT (0x81is_zombie) 301/0
+Warning: Unhandled Class object 552 AEC_DISP_REP_2D_SECTION (0x81is_zombie) 302/0
+Warning: Unhandled Class object 553 AEC_DISP_PROPS_2D_SECTION (0x81is_zombie) 303/0
+Warning: Unhandled Class object 554 AEC_DISP_REP_ANCHOR (0x81is_zombie) 304/0
+Warning: Unhandled Class object 555 AEC_DISP_REP_ANCHOR_ENT_TO_NODE (0x81is_zombie) 305/0
+Warning: Unhandled Class object 550 AEC_DISP_PROPS_ENT (0x81is_zombie) 306/0
+Warning: Unhandled Class object 556 AEC_DISP_REP_LAYOUT_GRID3D (0x81is_zombie) 307/0
+Warning: Unhandled Class object 557 AEC_DISP_PROPS_LAYOUT_GRID3D (0x81is_zombie) 308/0
+Warning: Unhandled Class object 558 AEC_DISP_REP_EDITINPLACEPROFILE (0x81is_zombie) 309/0
+Warning: Unhandled Class object 559 AEC_DISP_PROPS_EDITINPLACEPROFILE_MODEL (0x81is_zombie) 310/0
+Warning: Unhandled Class object 560 AEC_DISP_REP_CLIP_VOLUME_MODEL (0x81is_zombie) 311/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 312/0
+Warning: Unhandled Class object 562 AEC_DISP_REP_ENT_REF (0x81is_zombie) 313/0
+Warning: Unhandled Class object 563 AEC_DISP_PROPS_ENT_REF (0x81is_zombie) 314/0
+Warning: Unhandled Class object 564 AEC_DISP_REP_CLIP_VOLUME_RESULT_SUBDIV (0x81is_zombie) 315/0
+Warning: Unhandled Class object 565 AEC_DISP_PROPS_CLIP_VOLUME_RESULT (0x81is_zombie) 316/0
+Warning: Unhandled Class object 566 AEC_DISP_REP_DISPLAYTHEME (0x81is_zombie) 317/0
+Warning: Unhandled Class object 567 AEC_DISP_PROPS_DISPLAYTHEME (0x81is_zombie) 318/0
+Warning: Unhandled Class object 568 AEC_DISP_REP_CLIP_VOLUME_RESULT (0x81is_zombie) 319/0
+Warning: Unhandled Class object 569 AEC_DISP_REP_CLIP_VOLUME_PLAN (0x81is_zombie) 320/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 321/0
+Warning: Unhandled Class object 570 AEC_DISP_REP_LAYOUT_CURVE (0x81is_zombie) 322/0
+Warning: Unhandled Class object 571 AEC_DISP_PROPS_LAYOUT_CURVE (0x81is_zombie) 323/0
+Warning: Unhandled Class object 572 AEC_DISP_REP_LAYOUT_GRID2D (0x81is_zombie) 324/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 325/0
+Warning: Unhandled Class object 574 AEC_DISP_REP_MVBLOCK_REF_MODEL (0x81is_zombie) 326/0
+Warning: Unhandled Class object 575 AEC_DISP_REP_MVBLOCK_REF (0x81is_zombie) 327/0
+Warning: Unhandled Class object 576 AEC_DISP_REP_SLICE (0x81is_zombie) 328/0
+Warning: Unhandled Class object 577 AEC_DISP_PROPS_SLICE (0x81is_zombie) 329/0
+Warning: Unhandled Class object 578 AEC_DISP_REP_POLYGON_MODEL (0x81is_zombie) 330/0
+Warning: Unhandled Class object 579 AEC_DISP_PROPS_POLYGON_MODEL (0x81is_zombie) 331/0
+Warning: Unhandled Class object 580 AEC_DISP_REP_MATERIAL (0x81is_zombie) 332/0
+Warning: Unhandled Class object 581 AEC_DISP_PROPS_MATERIAL (0x81is_zombie) 333/0
+Warning: Unhandled Class object 582 AEC_DISP_REP_MASKBLOCK_REF (0x81is_zombie) 334/0
+Warning: Unhandled Class object 583 AEC_DISP_PROPS_MASKBLOCK (0x81is_zombie) 335/0
+Warning: Unhandled Class object 584 AEC_DISP_REP_POLYGON_TRUECOLOUR (0x81is_zombie) 336/0
+Warning: Unhandled Class object 585 AEC_DISP_PROPS_POLYGON_TRUECOLOUR (0x81is_zombie) 337/0
+Warning: Unhandled Class object 586 AEC_DISP_REP_MASS_GROUP_MODEL (0x81is_zombie) 338/0
+Warning: Unhandled Class object 587 AEC_DISP_PROPS_MASS_GROUP (0x81is_zombie) 339/0
+Warning: Unhandled Class object 588 AEC_DISP_REP_MASS_GROUP_PLAN (0x81is_zombie) 340/0
+Warning: Unhandled Class object 587 AEC_DISP_PROPS_MASS_GROUP (0x81is_zombie) 341/0
+Warning: Unhandled Class object 589 AEC_DISP_REP_MASS_ELEM_MODEL (0x81is_zombie) 342/0
+Warning: Unhandled Class object 590 AEC_DISP_PROPS_MASS_ELEM_MODEL (0x81is_zombie) 343/0
+Warning: Unhandled Class object 591 AEC_DISP_REP_MASS_ELEM_SCHEM (0x81is_zombie) 344/0
+Warning: Unhandled Class object 590 AEC_DISP_PROPS_MASS_ELEM_MODEL (0x81is_zombie) 345/0
+Warning: Unhandled Class object 592 AEC_DISP_REP_SET (0x81is_zombie) 347/0
+Warning: Unhandled Class object 592 AEC_DISP_REP_SET (0x81is_zombie) 348/0
+Warning: Unhandled Class object 592 AEC_DISP_REP_SET (0x81is_zombie) 349/0
+Warning: Unhandled Class object 592 AEC_DISP_REP_SET (0x81is_zombie) 350/0
+Warning: Unhandled Class object 592 AEC_DISP_REP_SET (0x81is_zombie) 351/0
+Warning: Unhandled Class object 592 AEC_DISP_REP_SET (0x81is_zombie) 352/0
+Warning: Unhandled Class object 592 AEC_DISP_REP_SET (0x81is_zombie) 353/0
+Warning: Unhandled Class object 592 AEC_DISP_REP_SET (0x81is_zombie) 354/0
+Warning: Unhandled Class object 593 AEC_DISP_REP_CONFIG (0x81is_zombie) 356/0
+Warning: Unhandled Class object 594 AEC_DISP_REP_BDG_ELEVLINE_RCP (0x81is_zombie) 359/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 360/0
+Warning: Unhandled Class object 595 AEC_DISP_REP_BDG_SECTIONLINE_MODEL (0x81is_zombie) 361/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 362/0
+Warning: Unhandled Class object 596 AEC_DISP_REP_COLUMN_GRID_MODEL (0x81is_zombie) 363/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 364/0
+Warning: Unhandled Class object 597 AEC_DISP_REP_BDG_SECTION_SUBDIV (0x81is_zombie) 365/0
+Warning: Unhandled Class object 565 AEC_DISP_PROPS_CLIP_VOLUME_RESULT (0x81is_zombie) 366/0
+Warning: Unhandled Class object 598 AEC_DISP_REP_CEILING_GRID_RCP (0x81is_zombie) 367/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 368/0
+Warning: Unhandled Class object 599 AEC_DISP_REP_BDG_SECTIONLINE_RCP (0x81is_zombie) 369/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 370/0
+Warning: Unhandled Class object 600 AEC_DISP_REP_CEILING_GRID_MODEL (0x81is_zombie) 371/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 372/0
+Warning: Unhandled Class object 601 AEC_DISP_REP_COLUMN_GRID_RCP (0x81is_zombie) 373/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 374/0
+Warning: Unhandled Class object 602 AEC_DISP_REP_BDG_SECTION_MODEL (0x81is_zombie) 375/0
+Warning: Unhandled Class object 603 AEC_DISP_REP_CURTAIN_WALL_UNIT_MODEL (0x81is_zombie) 376/0
+Warning: Unhandled Class object 604 AEC_DISP_PROPS_GRID_ASSEMBLY_MODEL (0x81is_zombie) 377/0
+Warning: Unhandled Class object 605 AEC_DISP_REP_CURTAIN_WALL_LAYOUT_MODEL (0x81is_zombie) 378/0
+Warning: Unhandled Class object 604 AEC_DISP_PROPS_GRID_ASSEMBLY_MODEL (0x81is_zombie) 379/0
+Warning: Unhandled Class object 606 AEC_DISP_REP_DOOR_THRESHOLD_SYMBOL_PLAN (0x81is_zombie) 380/0
+Warning: Unhandled Class object 607 AEC_DISP_PROPS_DOOR_THRESHOLD_SYMBOL_PLAN (0x81is_zombie) 381/0
+Warning: Unhandled Class object 608 AEC_DB_DISP_REP_DIM_GROUP_PLAN100 (0x81is_zombie) 382/0
+Warning: Unhandled Class object 609 AEC_DISP_PROPS_DIM (0x81is_zombie) 383/0
+Warning: Unhandled Class object 610 AEC_DISP_REP_DOOR_RCP (0x81is_zombie) 384/0
+Warning: Unhandled Class object 611 AEC_DISP_PROPS_DOOR (0x81is_zombie) 385/0
+Warning: Unhandled Class object 612 AEC_DISP_REP_DOOR_PLAN_HEKTO (0x81is_zombie) 386/0
+Warning: Unhandled Class object 613 AEC_DISP_PROPS_DOOR_PLAN_100 (0x81is_zombie) 387/0
+Warning: Unhandled Class object 614 AEC_DISP_REP_DOOR_NOMINAL (0x81is_zombie) 388/0
+Warning: Unhandled Class object 615 AEC_DISP_PROPS_DOOR_NOMINAL (0x81is_zombie) 389/0
+Warning: Unhandled Class object 616 AEC_DISP_REP_DOOR_PLAN_50 (0x81is_zombie) 390/0
+Warning: Unhandled Class object 617 AEC_DISP_PROPS_DOOR_PLAN_50 (0x81is_zombie) 391/0
+Warning: Unhandled Class object 618 AEC_DISP_REP_DOOR_MODEL (0x81is_zombie) 392/0
+Warning: Unhandled Class object 611 AEC_DISP_PROPS_DOOR (0x81is_zombie) 393/0
+Warning: Unhandled Class object 619 AEC_DISP_REP_DOOR_PLAN (0x81is_zombie) 394/0
+Warning: Unhandled Class object 611 AEC_DISP_PROPS_DOOR (0x81is_zombie) 395/0
+Warning: Unhandled Class object 620 AEC_DB_DISP_REP_DIM_GROUP_PLAN50 (0x81is_zombie) 396/0
+Warning: Unhandled Class object 609 AEC_DISP_PROPS_DIM (0x81is_zombie) 397/0
+Warning: Unhandled Class object 621 AEC_DISP_REP_DOOR_ELEV (0x81is_zombie) 398/0
+Warning: Unhandled Class object 611 AEC_DISP_PROPS_DOOR (0x81is_zombie) 399/0
+Warning: Unhandled Class object 622 AEC_DISP_REP_DOOR_THRESHOLD_PLAN (0x81is_zombie) 400/0
+Warning: Unhandled Class object 623 AEC_DISP_PROPS_DOOR_THRESHOLD_PLAN (0x81is_zombie) 401/0
+Warning: Unhandled Class object 624 AEC_DB_DISP_REP_DIM_GROUP_PLAN (0x81is_zombie) 402/0
+Warning: Unhandled Class object 609 AEC_DISP_PROPS_DIM (0x81is_zombie) 403/0
+Warning: Unhandled Class object 625 AEC_DISP_REP_OPENING (0x81is_zombie) 404/0
+Warning: Unhandled Class object 626 AEC_DISP_PROPS_OPENING (0x81is_zombie) 405/0
+Warning: Unhandled Class object 627 AEC_DISPREPAECDBDISPREPMASSELEMPLAN100 (0x81is_zombie) 406/0
+Warning: Unhandled Class object 628 AEC_DISPROPSMASSELEMPLANCOMMON (0x81is_zombie) 407/0
+Warning: Unhandled Class object 629 AEC_DISPREPAECDBDISPREPMASSGROUPPLAN100 (0x81is_zombie) 408/0
+Warning: Unhandled Class object 630 AEC_DISPROPSMASSGROUPPLANCOMMON (0x81is_zombie) 409/0
+Warning: Unhandled Class object 631 AEC_DISP_REP_OPENING_MODEL (0x81is_zombie) 410/0
+Warning: Unhandled Class object 626 AEC_DISP_PROPS_OPENING (0x81is_zombie) 411/0
+Warning: Unhandled Class object 632 AEC_DISPREPAECDBDISPREPMASSGROUPPLAN50 (0x81is_zombie) 412/0
+Warning: Unhandled Class object 630 AEC_DISPROPSMASSGROUPPLANCOMMON (0x81is_zombie) 413/0
+Warning: Unhandled Class object 633 AEC_DISP_REP_MASKBLOCK_REF_RCP (0x81is_zombie) 414/0
+Warning: Unhandled Class object 583 AEC_DISP_PROPS_MASKBLOCK (0x81is_zombie) 415/0
+Warning: Unhandled Class object 634 AEC_DISPREPAECDBDISPREPMASSELEMPLAN50 (0x81is_zombie) 416/0
+Warning: Unhandled Class object 628 AEC_DISPROPSMASSELEMPLANCOMMON (0x81is_zombie) 417/0
+Warning: Unhandled Class object 635 AEC_DISP_REP_MASS_ELEM_RCP (0x81is_zombie) 418/0
+Warning: Unhandled Class object 590 AEC_DISP_PROPS_MASS_ELEM_MODEL (0x81is_zombie) 419/0
+Warning: Unhandled Class object 636 AEC_DISP_REP_MASS_GROUP_RCP (0x81is_zombie) 420/0
+Warning: Unhandled Class object 587 AEC_DISP_PROPS_MASS_GROUP (0x81is_zombie) 421/0
+Warning: Unhandled Class object 637 AEC_DISP_REP_MVBLOCK_REF_RCP (0x81is_zombie) 422/0
+Warning: Unhandled Class object 638 AEC_DISPREPAECDBDISPREPOPENINGPLAN100 (0x81is_zombie) 423/0
+Warning: Unhandled Class object 639 AEC_DISPROPSOPENINGPLANCOMMONHATCHED (0x81is_zombie) 424/0
+Warning: Unhandled Class object 640 AEC_DISPREPAECDBDISPREPOPENINGPLAN50 (0x81is_zombie) 425/0
+Warning: Unhandled Class object 639 AEC_DISPROPSOPENINGPLANCOMMONHATCHED (0x81is_zombie) 426/0
+Warning: Unhandled Class object 641 AEC_DISP_REP_RAILING_PLAN_100 (0x81is_zombie) 427/0
+Warning: Unhandled Class object 642 AEC_DISP_ROPS_RAILING_PLAN_100 (0x81is_zombie) 428/0
+Warning: Unhandled Class object 643 AEC_DISP_REP_RAILING_MODEL (0x81is_zombie) 429/0
+Warning: Unhandled Class object 644 AEC_DISP_PROPS_RAILING_MODEL (0x81is_zombie) 430/0
+Warning: Unhandled Class object 645 AEC_DISP_REP_RAILING_PLAN (0x81is_zombie) 431/0
+Warning: Unhandled Class object 646 AEC_DISP_PROPS_RAILING_PLAN (0x81is_zombie) 432/0
+Warning: Unhandled Class object 647 AEC_DISPREPAECDBDISPREPOPENINGSILLPLAN (0x81is_zombie) 433/0
+Warning: Unhandled Class object 648 AEC_DISPROPSOPENINGSILLPLAN (0x81is_zombie) 434/0
+Warning: Unhandled Class object 649 AEC_DISPREPAECDBDISPREPOPENINGPLANREFLECTED (0x81is_zombie) 435/0
+Warning: Unhandled Class object 650 AEC_DISPROPSOPENINGPLANCOMMON (0x81is_zombie) 436/0
+Warning: Unhandled Class object 651 AEC_DISP_REP_ROOF_RCP (0x81is_zombie) 437/0
+Warning: Unhandled Class object 652 AEC_DISP_PROPS_ROOF (0x81is_zombie) 438/0
+Warning: Unhandled Class object 653 AEC_DISP_REP_SPACE_DECOMPOSED (0x81is_zombie) 439/0
+Warning: Unhandled Class object 654 AEC_DISP_PROPS_SPACE_DECOMPOSED (0x81is_zombie) 440/0
+Warning: Unhandled Class object 655 AEC_DISP_REP_SPACE_MODEL (0x81is_zombie) 441/0
+Warning: Unhandled Class object 656 AEC_DISP_PROPS_SPACE_MODEL (0x81is_zombie) 442/0
+Warning: Unhandled Class object 657 AEC_DISP_REP_SPACE_RCP (0x81is_zombie) 443/0
+Warning: Unhandled Class object 658 AEC_DISP_PROPS_SPACE_PLAN (0x81is_zombie) 444/0
+Warning: Unhandled Class object 659 AEC_DISP_REP_SLAB_MODEL (0x81is_zombie) 445/0
+Warning: Unhandled Class object 660 AEC_DISP_PROPS_SLAB (0x81is_zombie) 446/0
+Warning: Unhandled Class object 661 AEC_DISP_REP_ROOF_MODEL (0x81is_zombie) 447/0
+Warning: Unhandled Class object 652 AEC_DISP_PROPS_ROOF (0x81is_zombie) 448/0
+Warning: Unhandled Class object 662 AEC_DISP_REP_ROOFSLAB_MODEL (0x81is_zombie) 449/0
+Warning: Unhandled Class object 663 AEC_DISP_PROPS_ROOFSLAB (0x81is_zombie) 450/0
+Warning: Unhandled Class object 664 AEC_DISP_REP_RAILING_PLAN_50 (0x81is_zombie) 451/0
+Warning: Unhandled Class object 665 AEC_DISP_ROPS_RAILING_PLAN_50 (0x81is_zombie) 452/0
+Warning: Unhandled Class object 666 AEC_DISP_REP_STAIR_PLAN (0x81is_zombie) 453/0
+Warning: Unhandled Class object 667 AEC_DISP_PROPS_STAIR_PLAN (0x81is_zombie) 454/0
+Warning: Unhandled Class object 668 AEC_DISP_REP_STAIR_PLAN_100 (0x81is_zombie) 455/0
+Warning: Unhandled Class object 669 AEC_DISP_ROPS_STAIR_PLAN_100 (0x81is_zombie) 456/0
+Warning: Unhandled Class object 670 AEC_DISP_REP_SPACE_VOLUME (0x81is_zombie) 457/0
+Warning: Unhandled Class object 550 AEC_DISP_PROPS_ENT (0x81is_zombie) 458/0
+Warning: Unhandled Class object 671 AEC_DISP_REP_STAIR_MODEL (0x81is_zombie) 459/0
+Warning: Unhandled Class object 672 AEC_DISP_PROPS_STAIR_MODEL (0x81is_zombie) 460/0
+Warning: Unhandled Class object 673 AEC_DISP_REP_STAIR_PLAN_OVERLAPPING (0x81is_zombie) 461/0
+Warning: Unhandled Class object 674 AEC_DISP_PROPS_STAIR_PLAN_OVERLAPPING (0x81is_zombie) 462/0
+Warning: Unhandled Class object 675 AEC_DISP_REP_STAIR_PLAN_50 (0x81is_zombie) 463/0
+Warning: Unhandled Class object 676 AEC_DISP_ROPS_STAIR_PLAN_50 (0x81is_zombie) 464/0
+Warning: Unhandled Class object 677 AEC_DISP_REP_STAIR_RCP (0x81is_zombie) 465/0
+Warning: Unhandled Class object 667 AEC_DISP_PROPS_STAIR_PLAN (0x81is_zombie) 466/0
+Warning: Unhandled Class object 678 AEC_DISP_REP_WINDOW_NOMINAL (0x81is_zombie) 467/0
+Warning: Unhandled Class object 679 AEC_DISP_PROPS_WINDOW_NOMINAL (0x81is_zombie) 468/0
+Warning: Unhandled Class object 680 AEC_DISP_REP_WALL_RCP (0x81is_zombie) 469/0
+Warning: Unhandled Class object 681 AEC_DISP_PROPS_WALL_PLAN (0x81is_zombie) 470/0
+Warning: Unhandled Class object 682 AEC_DISP_REP_WALL_MODEL (0x81is_zombie) 471/0
+Warning: Unhandled Class object 683 AEC_DISP_PROPS_WALL_MODEL (0x81is_zombie) 472/0
+Warning: Unhandled Class object 684 AEC_DISP_REP_WINDOW_MODEL (0x81is_zombie) 473/0
+Warning: Unhandled Class object 685 AEC_DISP_PROPS_WINDOW (0x81is_zombie) 474/0
+Warning: Unhandled Class object 686 AEC_DISP_REP_WINDOW_PLAN_100 (0x81is_zombie) 475/0
+Warning: Unhandled Class object 687 AEC_DISP_PROPS_WINDOW_PLAN_100 (0x81is_zombie) 476/0
+Warning: Unhandled Class object 688 AEC_DISP_REP_WALL_GRAPH (0x81is_zombie) 477/0
+Warning: Unhandled Class object 689 AEC_DISP_PROPS_WALL_GRAPH (0x81is_zombie) 478/0
+Warning: Unhandled Class object 690 AEC_DISP_REP_WALL_SCHEM (0x81is_zombie) 479/0
+Warning: Unhandled Class object 691 AEC_DISP_PROPS_WALL_SCHEM (0x81is_zombie) 480/0
+Warning: Unhandled Class object 692 AEC_DISP_REP_WINDOW_ASSEMBLY_MODEL (0x81is_zombie) 481/0
+Warning: Unhandled Class object 604 AEC_DISP_PROPS_GRID_ASSEMBLY_MODEL (0x81is_zombie) 482/0
+Warning: Unhandled Class object 693 AEC_DISP_REP_WINDOW_ELEV (0x81is_zombie) 483/0
+Warning: Unhandled Class object 685 AEC_DISP_PROPS_WINDOW (0x81is_zombie) 484/0
+Warning: Unhandled Class object 694 AEC_DISP_REP_WINDOW_PLAN (0x81is_zombie) 485/0
+Warning: Unhandled Class object 685 AEC_DISP_PROPS_WINDOW (0x81is_zombie) 486/0
+Warning: Unhandled Class object 695 AEC_DISP_REP_WINDOWASSEMBLY_SILL_PLAN (0x81is_zombie) 487/0
+Warning: Unhandled Class object 696 AEC_DISP_PROPS_WINDOW_ASSEMBLY_SILL_PLAN (0x81is_zombie) 488/0
+Warning: Unhandled Class object 697 AEC_DISP_REP_WINDOW_SILL_PLAN (0x81is_zombie) 489/0
+Warning: Unhandled Class object 698 AEC_DISP_PROPS_WINDOW_SILL_PLAN (0x81is_zombie) 490/0
+Warning: Unhandled Class object 699 AEC_DISP_REP_WINDOW_RCP (0x81is_zombie) 491/0
+Warning: Unhandled Class object 685 AEC_DISP_PROPS_WINDOW (0x81is_zombie) 492/0
+Warning: Unhandled Class object 700 AEC_DISP_REP_WINDOW_PLAN_50 (0x81is_zombie) 493/0
+Warning: Unhandled Class object 701 AEC_DISP_PROPS_WINDOW_PLAN_50 (0x81is_zombie) 494/0
+Warning: Unhandled Class object 702 AEC_AECDBDISPREPBDGELEVLINEPLAN50 (0x81is_zombie) 495/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 496/0
+Warning: Unhandled Class object 703 AEC_AECDBDISPREPROOFPLAN50 (0x81is_zombie) 497/0
+Warning: Unhandled Class object 652 AEC_DISP_PROPS_ROOF (0x81is_zombie) 498/0
+Warning: Unhandled Class object 704 AEC_AECDBDISPREPCOLUMNGRIDPLAN50 (0x81is_zombie) 499/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 500/0
+Warning: Unhandled Class object 705 AEC_AECDBDISPREPBDGSECTIONLINEPLAN50 (0x81is_zombie) 501/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 502/0
+Warning: Unhandled Class object 706 AEC_AECDBDISPREPCURTAINWALLLAYOUTPLAN50 (0x81is_zombie) 503/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 504/0
+Warning: Unhandled Class object 708 AEC_AECDBDISPREPCEILINGGRIDPLAN50 (0x81is_zombie) 505/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 506/0
+Warning: Unhandled Class object 709 AEC_AECDBDISPREPCURTAINWALLUNITPLAN50 (0x81is_zombie) 507/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 508/0
+Warning: Unhandled Class object 710 AEC_AECDBDISPREPMVBLOCKREFPLAN50 (0x81is_zombie) 509/0
+Warning: Unhandled Class object 711 AEC_AECDBDISPREPWALLPLAN50 (0x81is_zombie) 510/0
+Warning: Unhandled Class object 681 AEC_DISP_PROPS_WALL_PLAN (0x81is_zombie) 511/0
+Warning: Unhandled Class object 712 AEC_AECDBDISPREPSLABPLAN50 (0x81is_zombie) 512/0
+Warning: Unhandled Class object 713 AEC_DISP_PROPS_SLAB_PLAN (0x81is_zombie) 513/0
+Warning: Unhandled Class object 714 AEC_AECDBDISPREPWINDOWASSEMBLYPLAN50 (0x81is_zombie) 514/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 515/0
+Warning: Unhandled Class object 715 AEC_AECDBDISPREPROOFSLABPLAN50 (0x81is_zombie) 516/0
+Warning: Unhandled Class object 716 AEC_DISP_PROPS_ROOFSLAB_PLAN (0x81is_zombie) 517/0
+Warning: Unhandled Class object 717 AEC_AECDBDISPREPSPACEPLAN50 (0x81is_zombie) 518/0
+Warning: Unhandled Class object 658 AEC_DISP_PROPS_SPACE_PLAN (0x81is_zombie) 519/0
+Warning: Unhandled Class object 718 AEC_AECDBDISPREPZONE50 (0x81is_zombie) 520/0
+Warning: Unhandled Class object 719 AEC_DISP_PROPS_ZONE (0x81is_zombie) 521/0
+Warning: Unhandled Class object 720 AEC_AECDBDISPREPBDGELEVLINEPLAN100 (0x81is_zombie) 522/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 523/0
+Warning: Unhandled Class object 721 AEC_DISP_REP_BDG_SECTIONLINE_PLAN (0x81is_zombie) 524/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 525/0
+Warning: Unhandled Class object 722 AEC_AECDBDISPREPCEILINGGRIDPLAN100 (0x81is_zombie) 526/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 527/0
+Warning: Unhandled Class object 723 AEC_DISP_REP_CEILING_GRID (0x37dis_zombie) 528/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 529/0
+Warning: Unhandled Class object 724 AEC_DISP_REP_COLUMN_GRID (0x81is_zombie) 530/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 531/0
+Warning: Unhandled Class object 725 AEC_DISP_REP_BDG_SECTIONLINE_PLAN (0x81is_zombie) 532/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 533/0
+Warning: Unhandled Class object 726 AEC_AECDBDISPREPBDGSECTIONLINEPLAN100 (0x81is_zombie) 534/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 535/0
+Warning: Unhandled Class object 727 AEC_AECDBDISPREPCURTAINWALLUNITPLAN100 (0x81is_zombie) 536/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 537/0
+Warning: Unhandled Class object 728 AEC_AECDBDISPREPCURTAINWALLLAYOUTPLAN100 (0x81is_zombie) 538/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 539/0
+Warning: Unhandled Class object 729 AEC_AECDBDISPREPCOLUMNGRIDPLAN100 (0x81is_zombie) 540/0
+Warning: Unhandled Class object 573 AEC_DISP_PROPS_LAYOUT_GRID2D (0x81is_zombie) 541/0
+Warning: Unhandled Class object 730 AEC_DISP_REP_CURTAIN_WALL_LAYOUT_PLAN (0x81is_zombie) 542/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 543/0
+Warning: Unhandled Class object 731 AEC_DISP_REP_CURTAIN_WALL_UNIT_PLAN (0x81is_zombie) 544/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 545/0
+Warning: Unhandled Class object 732 AEC_AECDBDISPREPMVBLOCKREFPLAN100 (0x81is_zombie) 546/0
+Warning: Unhandled Class object 733 AEC_DISP_REP_ROOF_PLAN (0x81is_zombie) 547/0
+Warning: Unhandled Class object 652 AEC_DISP_PROPS_ROOF (0x81is_zombie) 548/0
+Warning: Unhandled Class object 734 AEC_AECDBDISPREPROOFPLAN100 (0x81is_zombie) 549/0
+Warning: Unhandled Class object 652 AEC_DISP_PROPS_ROOF (0x81is_zombie) 550/0
+Warning: Unhandled Class object 735 AEC_AECDBDISPREPROOFSLABPLAN100 (0x81is_zombie) 551/0
+Warning: Unhandled Class object 716 AEC_DISP_PROPS_ROOFSLAB_PLAN (0x81is_zombie) 552/0
+Warning: Unhandled Class object 736 AEC_AECDBDISPREPSLABPLAN100 (0x81is_zombie) 553/0
+Warning: Unhandled Class object 713 AEC_DISP_PROPS_SLAB_PLAN (0x81is_zombie) 554/0
+Warning: Unhandled Class object 737 AEC_DISP_REP_SLAB_PLAN (0x81is_zombie) 555/0
+Warning: Unhandled Class object 713 AEC_DISP_PROPS_SLAB_PLAN (0x81is_zombie) 556/0
+Warning: Unhandled Class object 738 AEC_DISP_REP_ROOFSLAB_PLAN (0x81is_zombie) 557/0
+Warning: Unhandled Class object 716 AEC_DISP_PROPS_ROOFSLAB_PLAN (0x81is_zombie) 558/0
+Warning: Unhandled Class object 739 AEC_DISP_REP_SPACE_PLAN (0x81is_zombie) 559/0
+Warning: Unhandled Class object 658 AEC_DISP_PROPS_SPACE_PLAN (0x81is_zombie) 560/0
+Warning: Unhandled Class object 740 AEC_AECDBDISPREPWINDOWASSEMBLYPLAN100 (0x81is_zombie) 561/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 562/0
+Warning: Unhandled Class object 741 AEC_DISP_REP_WINDOW_ASSEMBLY_PLAN (0x81is_zombie) 563/0
+Warning: Unhandled Class object 707 AEC_DISP_PROPS_GRID_ASSEMBLY_PLAN (0x81is_zombie) 564/0
+Warning: Unhandled Class object 742 AEC_AECDBDISPREPWALLPLAN100 (0x81is_zombie) 565/0
+Warning: Unhandled Class object 681 AEC_DISP_PROPS_WALL_PLAN (0x81is_zombie) 566/0
+Warning: Unhandled Class object 743 AEC_AECDBDISPREPSPACEPLAN100 (0x81is_zombie) 567/0
+Warning: Unhandled Class object 658 AEC_DISP_PROPS_SPACE_PLAN (0x81is_zombie) 568/0
+Warning: Unhandled Class object 744 AEC_DISP_REP_WALL_PLAN (0x81is_zombie) 569/0
+Warning: Unhandled Class object 681 AEC_DISP_PROPS_WALL_PLAN (0x81is_zombie) 570/0
+Warning: Unhandled Class object 745 AEC_DISP_REP_ZONE (0x81is_zombie) 571/0
+Warning: Unhandled Class object 719 AEC_DISP_PROPS_ZONE (0x81is_zombie) 572/0
+Warning: Unhandled Class object 746 AEC_AECDBDISPREPZONE100 (0x81is_zombie) 573/0
+Warning: Unhandled Class object 719 AEC_DISP_PROPS_ZONE (0x81is_zombie) 574/0
+Warning: Unhandled Class object 747 AEC_DISP_REP_SCHEDULE_TABLE (0x81is_zombie) 575/0
+Warning: Unhandled Class object 748 AEC_DISP_PROPS_SCHEDULE_TABLE (0x81is_zombie) 576/0
+Warning: Unhandled Class object 749 AECS_DISP_REP_MEMBER_ELEVATION_DESIGN (0x81is_zombie) 577/0
+Warning: Unhandled Class object 750 AECS_DISP_PROPS_MEMBER_PROJECTED (0x81is_zombie) 578/0
+Warning: Unhandled Class object 751 AECS_DISP_REP_MEMBER_LOGICAL (0x81is_zombie) 579/0
+Warning: Unhandled Class object 752 AECS_DISP_PROPS_MEMBER_LOGICAL (0x81is_zombie) 580/0
+Warning: Unhandled Class object 753 AECS_DISP_REP_MEMBER_PLAN_SKETCH (0x81is_zombie) 581/0
+Warning: Unhandled Class object 754 AECS_DISP_PROPS_MEMBER_PLAN_SKETCH (0x81is_zombie) 582/0
+Warning: Unhandled Class object 755 AECS_DISP_REP_MEMBER_MODEL_DESIGN (0x81is_zombie) 583/0
+Warning: Unhandled Class object 756 AECS_DISP_PROPS_MEMBER (0x81is_zombie) 584/0
+Warning: Unhandled Class object 757 AECS_DISP_REP_MEMBER_MODEL_DETAIL (0x81is_zombie) 585/0
+Warning: Unhandled Class object 756 AECS_DISP_PROPS_MEMBER (0x81is_zombie) 586/0
+Warning: Unhandled Class object 758 AECS_DISP_REP_MEMBER_PLAN_DESIGN (0x81is_zombie) 587/0
+Warning: Unhandled Class object 759 AECS_DISP_PROPS_MEMBER_PLAN (0x81is_zombie) 588/0
+Warning: Unhandled Class object 760 AECS_DISP_REP_MEMBER_ELEVATION_DETAIL (0x81is_zombie) 589/0
+Warning: Unhandled Class object 750 AECS_DISP_PROPS_MEMBER_PROJECTED (0x81is_zombie) 590/0
+Warning: Unhandled Class object 761 AECS_DISP_REP_MEMBER_PLAN_DETAIL (0x81is_zombie) 591/0
+Warning: Unhandled Class object 759 AECS_DISP_PROPS_MEMBER_PLAN (0x81is_zombie) 592/0
+Warning: Unhandled Class object 762 AEC_DISP_REP_ANCHOR_BUB_TO_GRID_RCP (0x81is_zombie) 593/0
+Warning: Unhandled Class object 550 AEC_DISP_PROPS_ENT (0x81is_zombie) 594/0
+Warning: Unhandled Class object 763 AEC_DISP_REP_ANCHOR_BUB_TO_GRID (0x81is_zombie) 595/0
+Warning: Unhandled Class object 550 AEC_DISP_PROPS_ENT (0x81is_zombie) 596/0
+Warning: Unhandled Class object 764 AEC_DISP_REP_ANCHOR_BUB_TO_GRID_MODEL (0x81is_zombie) 597/0
+Warning: Unhandled Class object 550 AEC_DISP_PROPS_ENT (0x81is_zombie) 598/0
+Warning: Unhandled Class object 765 AEC_DISP_REP_BDG_ELEVLINE_MODEL (0x81is_zombie) 599/0
+Warning: Unhandled Class object 561 AEC_DISP_PROPS_CLIP_VOLUME (0x81is_zombie) 600/0
+Warning: Unhandled Class entity 516 ACAD_TABLE (0x401) 751/0
+Warning: Unhandled Class entity 516 ACAD_TABLE (0x401) 1148/0
+Warning: Unhandled Class entity 516 ACAD_TABLE (0x401) 1335/0
+Warning: Unhandled Class entity 516 ACAD_TABLE (0x401) 2014/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 4861/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 4893/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 4916/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 4935/0
+Warning: Unhandled Class object 518 TABLECONTENT (0x480) 4965/0
+Warning: Unhandled Class object 518 TABLECONTENT (0x480) 4969/0
+Warning: Unhandled Class object 518 TABLECONTENT (0x480) 4971/0
+Warning: Unhandled Class object 518 TABLECONTENT (0x480) 4975/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8629/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8646/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8663/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8669/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8697/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8703/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9056/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9059/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9062/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9065/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9068/0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9071/0
+Warning: Unhandled Class object 531 DATATABLE (0x0) 9309/0
+Warning: Unhandled Class object 531 DATATABLE (0x0) 9334/0
+Warning: Unhandled Class object 531 DATATABLE (0x0) 9360/0
+Warning: Unhandled Class object 531 DATATABLE (0x0) 9376/0
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unstable Class object 505 MATERIAL (0x481) 45/EC
+Warning: Unstable Class object 505 MATERIAL (0x481) 46/ED
+Warning: Unstable Class object 505 MATERIAL (0x481) 47/EE
+Warning: Unstable Class object 534 RAPIDRTRENDERSETTINGS (0x400) 211/78B03
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unstable Class object 542 MENTALRAYRENDERSETTINGS (0x400) 243/D9D99
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unstable Class object 515 DIMASSOC (0x0) 4861/46A07B
+Warning: Unstable Class object 515 DIMASSOC (0x0) 4893/46A0CB
+Warning: Unstable Class object 515 DIMASSOC (0x0) 4916/46A11D
+Warning: Unstable Class object 515 DIMASSOC (0x0) 4935/46A146
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8629/46F741
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8646/46F77E
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8663/46F7B0
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8669/46F7CC
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8697/46F809
+Warning: Unstable Class object 515 DIMASSOC (0x0) 8703/46F825
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9056/46FB1E
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9059/46FB21
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9062/46FB24
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9065/46FB27
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9068/46FB2A
+Warning: Unstable Class object 515 DIMASSOC (0x0) 9071/46FB2D
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
+Warning: Unknown object, skipping eed/reactors/xdic
