@@ -11,7 +11,7 @@ data/intermediate/dxf/*.dxf~
 data/intermediate/dxf/original-fonts/
 
 # HEC-RAS runtime outputs: inputs are versioned, HDF/run files are local
-models/main/*.hdf
+
 models/main/*.O??
 models/main/*.r??
 models/main/*.data_errors.txt
