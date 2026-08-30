@@ -1,0 +1,31 @@
+name: Temporary HEC-RAS result extraction
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tmp-extract-hecras.yml'
+      - 'models/main/*.hdf'
+      - 'scripts/extract_hecras_results.py'
+      - 'data/processed/design_bed/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip h5py numpy
+      - name: Extract five HEC-RAS cases
+        run: |
+          python scripts/extract_hecras_results.py
+          echo '--- SUMMARY CSV ---'
+          cat results/hecras_five_cases_summary.csv
+          echo '--- DETAIL CSV ---'
+          cat results/hecras_five_cases.csv
