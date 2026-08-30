@@ -1,0 +1,9 @@
+﻿plan,river_station,baseline_wse_m,rerun_wse_m,difference_m,tolerance_m,parity_verified,reference
+p01,600,22.383251,22.383251,0.000000190,0.000001000,True,boundary_sensitivity_base
+p01,500,22.202982,22.202982,-0.000000051,0.000001000,True,boundary_sensitivity_base
+p02,600,22.385777,22.385777,-0.000000480,0.000001000,True,boundary_sensitivity_base
+p02,500,22.199722,22.199722,0.000000290,0.000001000,True,boundary_sensitivity_base
+p03,600,22.387054,22.387054,0.000000443,0.000001000,True,boundary_sensitivity_base
+p03,500,22.198093,22.198093,0.000000414,0.000001000,True,boundary_sensitivity_base
+p04,600,22.389633,22.389633,0.000000179,0.000001000,True,boundary_sensitivity_base
+p04,500,22.194809,22.194809,-0.000000040,0.000001000,True,boundary_sensitivity_base

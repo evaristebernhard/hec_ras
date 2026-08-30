@@ -1,0 +1,8 @@
+﻿plan,units,rs500_obstr_block_mode,steady_completion_marker,error_warning_absent,hdf_file
+p01,SI Units,1,True,True,GanjiangWestBridge.p01.hdf
+p02,SI Units,1,True,True,GanjiangWestBridge.p02.hdf
+p03,SI Units,1,True,True,GanjiangWestBridge.p03.hdf
+p04,SI Units,1,True,True,GanjiangWestBridge.p04.hdf
+p05,SI Units,1,True,True,GanjiangWestBridge.p05.hdf
+p06,SI Units,1,True,True,GanjiangWestBridge.p06.hdf
+p07,SI Units,1,True,True,GanjiangWestBridge.p07.hdf

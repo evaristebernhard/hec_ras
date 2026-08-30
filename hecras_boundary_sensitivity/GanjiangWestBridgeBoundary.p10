@@ -1,0 +1,26 @@
+Plan Title=DesignBed_Base
+Program Version=7.01
+Short Identifier=DesignBed_Base
+Geom File=g05
+Flow File=f02
+Subcritical Flow
+Run HTab=-1
+Run RAS=-1
+Run UNet= 0
+Run Sediment= 0
+Run PostProcess= 0
+Run WQNet= 0
+Std Step Tol= 0.003
+Critical Tol= 0.003
+Num of Std Step Trials= 40
+Max Error Tol= 0.03
+Flow Tol Ratio= 0.001
+Split Flow NTrial= 30
+Split Flow Tol= 0.02
+Split Flow Ratio= 0.02
+Log Output Level= 1
+Friction Slope Method= 1
+Parabolic Critical Depth
+Global Log Level= 0
+CheckData=True
+Encroach Param=-1 ,0,0, 0

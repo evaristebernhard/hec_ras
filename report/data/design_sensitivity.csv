@@ -1,0 +1,7 @@
+case_id,river_station,wse_m,delta_vs_center_mm,range_mm
+DesignBed,600,22.565807,0.0,0.177
+DesignBed,500,21.972029,0.0,0.097
+DesignLocal,600,22.565630,-0.177,0.177
+DesignLocal,500,21.971931,-0.097,0.097
+DesignDistrib,600,22.565802,-0.006,0.177
+DesignDistrib,500,21.971987,-0.041999999999999996,0.097

@@ -1,0 +1,18 @@
+Flow Title=Q26000
+Program Version=7.01
+Number of Profiles= 1
+Profile Names=Q26000
+River Rch & RM=Ganjiang,WestBranch      ,1000
+ 26000.0
+Boundary for River Rch & Prof#=Ganjiang,WestBranch      , 1
+Up Type= 0
+Dn Type= 1
+Dn Known WS=22.549342
+DSS Import StartDate=
+DSS Import StartTime=
+DSS Import EndDate=
+DSS Import EndTime=
+DSS Import GetInterval= 0
+DSS Import Interval=
+DSS Import GetPeak= 0
+DSS Import FillOption= 0

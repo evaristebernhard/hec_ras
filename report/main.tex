@@ -1,0 +1,525 @@
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+
+\usepackage[a4paper,margin=2.35cm,headheight=15pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{DejaVu Sans Mono}
+\setCJKmainfont{Noto Serif CJK SC}
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKmonofont{Noto Sans Mono CJK SC}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{pgfplotstable}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue,
+  pdftitle={赣江西支特大桥水文与行洪一维水动力分析报告},
+  pdfauthor={项目计算稿}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{赣江西支特大桥水文与行洪分析}
+\rhead{HEC-RAS 1D 稳定流}
+\cfoot{\thepage}
+
+\renewcommand{\arraystretch}{1.25}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.25em}
+\captionsetup{font=small,labelfont=bf}
+
+\newcommand{\mthreeps}{\mathrm{m^3/s}}
+\newcommand{\WSE}{\mathrm{WSE}}
+\newcommand{\DeltaZ}{\Delta Z}
+\newcommand{\modelversion}{v2}
+
+\title{\bfseries 赣江西支特大桥水文与行洪一维水动力分析报告\\[0.8em]
+\large HEC-RAS 1D 稳定流五工况计算与敏感性分析}
+\author{项目计算稿}
+\date{2026年8月30日}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\vfill
+\begin{center}
+\begin{minipage}{0.88\textwidth}
+\small
+\textbf{报告定位：}本报告基于现有 CAD/DWG、断面资料及给定设计行洪参数，建立 HEC-RAS 7.0.1 一维稳定流模型，对现状河床、三种防冲刷设施和设计河床筛选工况进行对比。报告用于一维行洪影响与方案筛选，不替代显式桥梁局部水力模型、二维流场分析或桥墩冲刷计算。
+\end{minipage}
+\end{center}
+\vfill
+\clearpage
+
+\begin{abstract}
+本项目在不依赖 MIKE 商业许可的条件下，采用 HEC-RAS 7.0.1 一维稳定流作为主计算工具，以 Python 完成 CAD 数据恢复、几何构造、结果验收和敏感性整理。计算流量为 $Q=26{,}000\ \mthreeps$，基准 Manning 粗糙系数为 $n=0.030$，基准下游已知水位为 22.049342~m。
+
+现状河床及 0.5、1.0、2.0 m 防冲刷工况分别采用 360、380、390、410 m$^2$ 等效阻水面积；设计河床工况采用 280 m$^2$ 阻水面积，并依据 CAD 中 15\#、16\#、17\# 桥墩设计泥面高程以及表列 5700~m$^2$ 行洪净面积构造受约束筛选断面。五个主工况和两套设计河床重建敏感性工况均完成正式 HEC-RAS 计算并通过 HDF 验收。
+
+在桥上游约 100 m 的 RS=600 断面，0.5、1.0、2.0 m 防护相对现状的附加壅水分别约为 2.525~mm、3.803~mm、6.382~mm；设计河床筛选工况相对现状约高 0.183~m。下游控制水位在基准值上下各变化 0.50~m 后，三种防护的附加壅水仍保持毫米级，说明“防护设施对一维整体行洪水位影响较小”的相对判断稳定。设计河床三种合理重建方式之间的关键断面水位差仅约 0.10--0.18 mm，表明一维筛选结果对控制点之间的补线形式不敏感。
+
+绝对洪水位则明显受下游边界影响，因此在缺少正式设计控制水位或水位--流量关系时，本报告不将某一绝对 WSE 作为最终设计定值。现有图纸亦未提供完整桥面、梁底/低弦及桥墩迎水尺寸，暂不具备建立严谨显式 Bridge/Culvert 模型的全部资料条件。
+\end{abstract}
+
+\tableofcontents
+\clearpage
+
+\section{任务目标与成果边界}
+
+\subsection{任务目标}
+本次计算的核心目标是回答：在设计洪水流量 26000~m$^3$/s 下，现状河床、设计河床以及设置不同高度防冲刷设施后，桥位河段的一维水面线、平均流速、过流面积和上游壅水如何变化。
+
+根据现有资料，五个目标工况见表~\ref{tab:cases}。
+
+\begin{table}[H]
+\centering
+\caption{五个目标工况及设计参数}
+\label{tab:cases}
+\begin{tabular}{lrrrr}
+\toprule
+工况 & 桥墩阻水面积 & 附加阻水面积 & 行洪净面积 & 阻水比 \\
+ & (m$^2$) & (m$^2$) & (m$^2$) & (\%) \\
+\midrule
+设计河床线 & 280 & 0 & 5700 & 4.9 \\
+现状河床线 & 360 & 0 & 6800 & 5.3 \\
+0.5 m 防冲刷 & 360 & 20 & 6780 & 5.6 \\
+1.0 m 防冲刷 & 360 & 30 & 6770 & 5.8 \\
+2.0 m 防冲刷 & 360 & 50 & 6750 & 6.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{成果边界}
+当前成果属于\textbf{一维等效阻水行洪筛选模型}。它能够用于比较工况间整体水位和断面平均水力参数，但不能直接回答：
+\begin{itemize}[leftmargin=2.2em]
+  \item 桥墩周围局部最大流速、绕流和涡结构；
+  \item 局部冲刷深度和冲刷坑发展；
+  \item 桥面压力流、低弦控制或漫顶问题；
+  \item 缺少正式下游水位--流量关系时的最终绝对设计洪水位。
+\end{itemize}
+
+\section{基础资料与 CAD 数据恢复}
+
+\subsection{已有图纸与断面}
+工作区包含 4 份原始 DWG，并已转换为程序可读 DXF。由断面图恢复出 5 个关键横断面：上游 500 m、上游 100 m、桥下、下游 100 m、下游 500 m。
+
+图~\ref{fig:reach-schematic} 给出模型断面和河段关系。HEC-RAS 河道桩号沿下游方向递减。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.012cm,y=1cm,>=stealth]
+  \draw[->,thick] (0,0) -- (1000,0);
+  \node[above] at (0,0.2) {上游};
+  \node[above] at (1000,0.2) {下游};
+  \foreach \x/\lab/\desc in {0/1000/上游500 m,400/600/上游100 m,500/500/桥下,600/400/下游100 m,1000/0/下游500 m}{
+    \draw[thick] (\x,-0.35) -- (\x,0.35);
+    \node[below,align=center] at (\x,-0.4) {RS=\lab\\\desc};
+  }
+  \draw[<->] (400,0.8) -- node[above]{约100 m} (500,0.8);
+  \draw[<->] (500,0.8) -- node[above]{约100 m} (600,0.8);
+\end{tikzpicture}
+\caption{HEC-RAS 一维河段与五个关键断面示意}
+\label{fig:reach-schematic}
+\end{figure}
+
+\subsection{设计河床可追溯控制信息}
+现有 CAD 中未发现一条可直接追溯的完整跨河设计河床断面线，但抗冲刷图中的桥墩基础冲刷参数表给出了 15\#、16\#、17\# 桥墩设计泥面标高。程序通过桥墩中心线与实测桥下断面的交点，将这些高程映射到断面 station，结果见表~\ref{tab:pier-control}。
+
+\begin{table}[H]
+\centering
+\caption{设计河床控制点及其在桥下断面中的映射}
+\label{tab:pier-control}
+\begin{tabular}{rrrr}
+\toprule
+桥墩 & station (m) & 现状断面高程 (m) & 设计泥面高程 (m) \\
+\midrule
+15\# & 127.292 & 1.996 & 4.270 \\
+16\# & 233.855 & 0.866 & 5.400 \\
+17\# & 348.858 & 5.193 & 9.560 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+同时，设计河床工况要求在 WSE=22.190~m 时，桥下断面行洪净面积为 5700~m$^2$。因此设计河床筛选断面采用如下硬约束：
+\begin{enumerate}[leftmargin=2.5em]
+  \item 满足 15\#/16\#/17\# 三个设计泥面高程；
+  \item 不降低现状河床，仅允许局部抬高；
+  \item WSE=22.190~m 时总断面面积为 5980~m$^2$；
+  \item 扣除 280~m$^2$ 等效阻水后，净行洪面积为 5700~m$^2$；
+  \item 控制点之间采用平滑、最小变形的受约束重建。
+\end{enumerate}
+
+为检验补线方式对结果的影响，另构造“局部型”和“分布型”两种重建，三种方案见图~\ref{fig:design-bed}。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.94\textwidth,height=8.0cm,
+  xlabel={断面 station (m)},ylabel={高程 (m)},
+  grid=major,legend pos=south east,
+  xmin=0,xmax=480,ymin=-2,ymax=24,
+  every axis plot/.append style={thick}
+]
+\addplot table[x=station_m,y=elevation_m]{data/current_section.dat};
+\addlegendentry{现状桥下断面}
+\addplot table[x=station_m,y=elevation_m]{data/design_center_section.dat};
+\addlegendentry{设计河床-中心方案}
+\addplot table[x=station_m,y=elevation_m]{data/design_local_section.dat};
+\addlegendentry{设计河床-局部型}
+\addplot table[x=station_m,y=elevation_m]{data/design_distributed_section.dat};
+\addlegendentry{设计河床-分布型}
+\addplot+[only marks,mark=*,mark size=2.5pt] table[x=station_m,y=design_elev_m]{data/pier_controls.dat};
+\addlegendentry{15/16/17\#设计控制点}
+\end{axis}
+\end{tikzpicture}
+\caption{现状桥下断面与三种受约束设计河床重建}
+\label{fig:design-bed}
+\end{figure}
+
+\section{HEC-RAS 模型建立}
+
+\subsection{计算条件}
+主模型采用 HEC-RAS 7.0.1 一维稳定亚临界流计算。主要参数如下：
+\begin{itemize}[leftmargin=2.2em]
+  \item 设计流量：$Q=26{,}000~\mathrm{m^3/s}$；
+  \item Manning 粗糙系数：$n=0.030$；
+  \item 收缩系数：0.10；扩散系数：0.30；
+  \item 基准下游已知水位：22.049342~m；
+  \item 五个主工况的等效阻水面积：280 / 360 / 380 / 390 / 410 m$^2$。
+\end{itemize}
+
+\subsection{等效阻水表达与 v2 修正}
+等效阻水带的横向宽度不是任意指定，而是求解使 WSE=22.190~m 时“水面到河床之间的阻水面积”恰好等于目标阻水面积。
+
+早期版本曾将 obstruction 顶高程也设为 22.190~m。当计算 WSE 略高于该值时，HEC-RAS 会允许水流从等效阻水体顶部通过，相当于桥墩阻水在洪水位附近被人工削弱。修正版 \modelversion{} 将两个概念分开：
+\begin{itemize}[leftmargin=2.2em]
+  \item 22.190~m 仅用于\textbf{校准阻水面积和横向宽度}；
+  \item obstruction 顶高程采用 50~m 数值哨兵，使研究水位范围内不发生人工越顶。
+\end{itemize}
+该 50~m 仅为数值设置，不代表真实桥面或桥墩顶高程。修正后旧结论的量级不变，例如 2.0 m 防护在 RS=600 的相对壅水由约 6.41 mm 调整为约 6.38 mm，但高水位敏感性计算的物理表达更合理。
+
+\subsection{模型运行与验收}
+七个正式/敏感性 plan 的 HDF 结果均执行以下自动验收：
+\begin{enumerate}[leftmargin=2.5em]
+  \item HDF 根属性必须报告 \texttt{SI Units}；
+  \item RS=500 必须报告 \texttt{Obstr Block Mode=1}；
+  \item 计算信息必须出现 \texttt{Finished Steady Flow Simulation}；
+  \item 计算信息不得包含 warning 或 error。
+\end{enumerate}
+
+图~\ref{fig:hecras-gui} 为本项目 HEC-RAS 7.0.1 工程窗口的自动截取记录，仅截取软件窗口本身。
+
+\begin{figure}[H]
+\centering
+\IfFileExists{figures/hecras_project_window.png}{
+  \includegraphics[width=0.65\textwidth]{figures/hecras_project_window.png}
+}{\fbox{HEC-RAS 工程窗口截图待生成}}
+\caption{HEC-RAS 7.0.1 项目界面记录}
+\label{fig:hecras-gui}
+\end{figure}
+
+\section{五工况正式计算结果}
+
+\subsection{桥上游 100 m（RS=600）}
+五个主工况在 RS=600 的结果见表~\ref{tab:rs600}。
+
+\begin{table}[H]
+\centering
+\caption{RS=600 五工况水力结果}
+\label{tab:rs600}
+\begin{tabular}{lrrrr}
+\toprule
+工况 & WSE (m) & 平均流速 (m/s) & 过流面积 (m$^2$) & 相对现状 WSE \\
+\midrule
+现状河床 & 22.383251 & 3.4883 & 7453.412 & 0 \\
+0.5 m 防护 & 22.385777 & 3.4877 & 7454.858 & +2.525 mm \\
+1.0 m 防护 & 22.387054 & 3.4873 & 7455.592 & +3.803 mm \\
+2.0 m 防护 & 22.389633 & 3.4866 & 7457.069 & +6.382 mm \\
+设计河床筛选 & 22.565807 & 3.4400 & 7558.057 & +182.556 mm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+三种防护工况相对现状的附加壅水见图~\ref{fig:backwater-bar}。这里特意不把设计河床的 182.6 mm 与其画在同一纵轴，以免压缩毫米级防护差异的可读性。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.78\textwidth,height=7cm,
+  ybar,bar width=18pt,
+  symbolic x coords={0.5m,1.0m,2.0m},xtick=data,
+  xlabel={防冲刷设施高度},ylabel={RS=600 附加壅水 (mm)},
+  ymin=0,ymax=7.2,grid=major,
+  nodes near coords,nodes near coords align={vertical}
+]
+\addplot coordinates {(0.5m,2.525) (1.0m,3.803) (2.0m,6.382)};
+\end{axis}
+\end{tikzpicture}
+\caption{三种防冲刷方案在桥上游 100 m 的附加壅水}
+\label{fig:backwater-bar}
+\end{figure}
+
+\subsection{桥下断面（RS=500）}
+桥下断面结果见表~\ref{tab:rs500}。
+
+\begin{table}[H]
+\centering
+\caption{RS=500 五工况水力结果}
+\label{tab:rs500}
+\begin{tabular}{lrrrrr}
+\toprule
+工况 & WSE (m) & 能量线 (m) & 过流面积 (m$^2$) & 流速 (m/s) & Fr \\
+\midrule
+现状河床 & 22.202982 & 22.963385 & 6757.413 & 3.8476 & 0.327 \\
+0.5 m 防护 & 22.199722 & 22.965019 & 6735.817 & 3.8600 & 0.328 \\
+1.0 m 防护 & 22.198093 & 22.965849 & 6725.049 & 3.8661 & 0.328 \\
+2.0 m 防护 & 22.194809 & 22.967522 & 6703.491 & 3.8786 & 0.330 \\
+设计河床筛选 & 21.972029 & 23.081282 & 5595.795 & 4.6463 & 0.433 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+阻水增加时桥下局部 WSE 略有下降，而桥上游 WSE 上升。这是过流面积减小、流速和速度水头增加后的局部能量分配结果，因此判断“壅水”应看桥上游控制断面，而不能仅比较桥下 WSE。
+
+设计河床筛选工况的桥下平均流速提高到约 4.65~m/s，明显高于现状约 3.85~m/s。图~\ref{fig:velocity-bar} 展示五工况的桥下平均流速。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.90\textwidth,height=7.2cm,
+  ybar,bar width=13pt,
+  symbolic x coords={现状,0.5m,1.0m,2.0m,设计河床},xtick=data,
+  ylabel={RS=500 平均流速 (m/s)},
+  ymin=3.5,ymax=4.9,grid=major,
+  nodes near coords,nodes near coords align={vertical}
+]
+\addplot coordinates {(现状,3.8476) (0.5m,3.8600) (1.0m,3.8661) (2.0m,3.8786) (设计河床,4.6463)};
+\end{axis}
+\end{tikzpicture}
+\caption{桥下断面五工况平均流速对比}
+\label{fig:velocity-bar}
+\end{figure}
+
+\subsection{纵向水面线}
+图~\ref{fig:wse-profile} 给出五个主工况沿五个断面的 WSE。三种防护工况与现状曲线非常接近，而设计河床筛选方案在桥位上游出现明显的附加水位抬高。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.95\textwidth,height=8.2cm,
+  xlabel={River Station},ylabel={WSE (m)},
+  x dir=reverse,xmin=0,xmax=1000,
+  grid=major,legend columns=2,legend pos=south west,
+  every axis plot/.append style={thick,mark=*}
+]
+\addplot table[x=river_station,y=wse_m]{data/wse_Current.dat};\addlegendentry{现状河床}
+\addplot table[x=river_station,y=wse_m]{data/wse_Protect05.dat};\addlegendentry{0.5 m 防护}
+\addplot table[x=river_station,y=wse_m]{data/wse_Protect10.dat};\addlegendentry{1.0 m 防护}
+\addplot table[x=river_station,y=wse_m]{data/wse_Protect20.dat};\addlegendentry{2.0 m 防护}
+\addplot table[x=river_station,y=wse_m]{data/wse_DesignBed.dat};\addlegendentry{设计河床筛选}
+\end{axis}
+\end{tikzpicture}
+\caption{五个主工况纵向水面线}
+\label{fig:wse-profile}
+\end{figure}
+
+\section{设计河床重建敏感性}
+
+中心方案、局部型、分布型三种设计河床在 WSE=22.190~m 时均满足总面积 5980~m$^2$、阻水 280~m$^2$、净行洪面积 5700~m$^2$，并严格满足三个设计泥面控制点。
+
+三套方案的 HEC-RAS 关键水位差见表~\ref{tab:design-sens}。
+
+\begin{table}[H]
+\centering
+\caption{设计河床重建形式对关键 WSE 的影响}
+\label{tab:design-sens}
+\begin{tabular}{lrr}
+\toprule
+方案 & RS=600 WSE (m) & RS=500 WSE (m) \\
+\midrule
+中心方案 & 22.565807 & 21.972029 \\
+局部型 & 22.565630 & 21.971931 \\
+分布型 & 22.565802 & 21.971987 \\
+\midrule
+三方案范围 & 0.177 mm & 0.097 mm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+RS=600 的三方案总范围仅约 0.177~mm，而中心方案相对现状效应约为 182.6~mm，二者相差约三个数量级。因此在\textbf{一维筛选层面}，控制点之间具体采用哪一种合理平滑补线并不会决定结论。
+
+但这一结论不意味着当前重建线可替代正式设计图。若正式成果要求提交“设计河床线 DWG/DXF”，仍应使用原设计院/设计人员给出的整治线，或由设计人员依据疏浚、防冲刷及结构设计意图正式绘制。
+
+\section{下游边界敏感性}
+
+\subsection{敏感性设置}
+为检验基准下游已知水位的影响，另建立独立敏感性工程，采用：
+\begin{align*}
+Z_{d,\mathrm{low}} &= 21.549342~m,\\
+Z_{d,\mathrm{base}} &= 22.049342~m,\\
+Z_{d,\mathrm{high}} &= 22.549342~m.
+\end{align*}
+五个主工况共形成 15 个 HEC-RAS plan，全部通过 HDF 自动验收。
+
+\subsection{防护附加壅水的稳定性}
+三种防护在 RS=600 的相对现状壅水随下游边界变化见图~\ref{fig:boundary-protect} 和表~\ref{tab:boundary}。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.90\textwidth,height=7.8cm,
+  xlabel={下游已知水位 (m)},ylabel={RS=600 相对现状壅水 (mm)},
+  grid=major,legend pos=north west,
+  every axis plot/.append style={thick,mark=*}
+]
+\addplot table[x=downstream_wse_m,y=delta_wse_mm]{data/boundary_Protect05.dat};\addlegendentry{0.5 m 防护}
+\addplot table[x=downstream_wse_m,y=delta_wse_mm]{data/boundary_Protect10.dat};\addlegendentry{1.0 m 防护}
+\addplot table[x=downstream_wse_m,y=delta_wse_mm]{data/boundary_Protect20.dat};\addlegendentry{2.0 m 防护}
+\end{axis}
+\end{tikzpicture}
+\caption{下游边界变化对三种防护附加壅水的影响}
+\label{fig:boundary-protect}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{下游水位 $\pm0.50$ m 时 RS=600 相对现状效应范围}
+\label{tab:boundary}
+\begin{tabular}{lr}
+\toprule
+工况 & 相对现状 WSE 范围 \\
+\midrule
+0.5 m 防护 & +2.296 -- +2.588 mm \\
+1.0 m 防护 & +3.448 -- +4.002 mm \\
+2.0 m 防护 & +5.762 -- +6.853 mm \\
+设计河床筛选 & +158.121 -- +212.135 mm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+三种防护在如此大的下游水位扰动下仍然保持毫米级附加壅水，说明防护方案的\textbf{相对行洪影响较小}这一结论对边界条件具有较好的稳定性。
+
+设计河床筛选工况则保持分米级影响，但具体大小随边界变化较明显，见图~\ref{fig:boundary-design}。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.80\textwidth,height=7.2cm,
+  xlabel={下游已知水位 (m)},ylabel={RS=600 设计河床相对现状壅水 (mm)},
+  grid=major,
+  every axis plot/.append style={thick,mark=*}
+]
+\addplot table[x=downstream_wse_m,y=delta_wse_mm]{data/boundary_DesignBed.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{设计河床筛选工况对下游边界的敏感性}
+\label{fig:boundary-design}
+\end{figure}
+
+\subsection{绝对水位不能据此定值}
+在现状工况下，下游已知水位从 21.549342~m 提高到 22.549342~m 时，RS=600 的绝对 WSE 约从 21.901~m 变化到 22.863~m。因此虽然工况间相对差值较稳定，但绝对 WSE 对下游边界高度敏感。
+
+在缺少正式设计控制水位、实测水位--流量关系或可靠正常水深参数时，报告中的 22.383251~m 等绝对水位应理解为\textbf{基准边界条件下的模型结果}，不能直接作为最终设计洪水位定值。
+
+\section{显式桥梁模型资料审计}
+
+为判断是否可以进一步升级为 HEC-RAS Bridge/Culvert 模型，程序对现有 DXF 中的桥梁结构文字信息进行了审计。目前可追溯信息主要包括：
+\begin{itemize}[leftmargin=2.2em]
+  \item 15\#/16\#/17\# 桥墩位置；
+  \item 桩基、设计桩底、设计泥面、实测泥面、最大冲刷线；
+  \item 防冲刷结构厚度与部分基础“顶面高程”信息；
+  \item 图纸高程采用黄海高程系统等说明。
+\end{itemize}
+
+但目前未检索到能够完整确定桥梁水力开口的\textbf{桥面高程、梁底/低弦、桥下净空、完整墩身迎水宽度}等资料。因此现阶段不宜为了“模型更复杂”而人为猜测桥梁几何。
+
+如果后续获得桥梁总体布置/立面图和结构尺寸，可在现有一维模型上继续建立显式 Bridge/Culvert，并比较其与当前等效阻水模型的差别。
+
+\section{结论与建议}
+
+\subsection{主要结论}
+\begin{enumerate}[leftmargin=2.5em]
+  \item \textbf{三种防冲刷设施的一维整体壅水很小。}在基准条件下，0.5、1.0、2.0 m 防护在桥上游 100 m 的附加壅水约为 2.5、3.8、6.4 mm；下游水位上下变化 0.5 m 后仍保持毫米级。
+  \item \textbf{设计河床工况的主要影响来自断面缩小，而不是桥墩阻水面积。}尽管设计河床工况阻水面积 280 m$^2$ 小于现状 360 m$^2$，其规定净行洪面积仅 5700~m$^2$，使桥下平均流速提高到约 4.65~m/s，并在 RS=600 产生约 0.18~m 的水位抬高。
+  \item \textbf{设计河床筛选重建对补线形式不敏感。}三种合理重建在关键断面的水位差仅约 0.10--0.18 mm，远小于其相对现状的分米级效应。
+  \item \textbf{相对结论比绝对水位可靠。}绝对 WSE 对下游边界高度敏感，因此当前模型适合比较方案差值，而不是在缺少正式水文边界时给出最终设计洪水位定值。
+  \item \textbf{模型计算链已经基本完成。}当前进一步提升成果质量的主要瓶颈已从数值计算转为工程资料：正式设计河床线、桥面/低弦和桥墩结构尺寸，以及正式下游控制边界。
+\end{enumerate}
+
+\subsection{后续建议}
+\begin{enumerate}[leftmargin=2.5em]
+  \item 获取桥梁总体布置图/立面图，重点核实梁底或低弦高程、桥面高程、墩身迎水尺寸；
+  \item 获取正式设计洪水控制水位或水位--流量关系；
+  \item 获取 Manning $n$ 的项目依据，并做最终粗糙率校准；
+  \item 如成果要求提交正式设计河床 DWG/DXF，应以原始设计线或设计人员正式整治线为准；
+  \item 只有在任务明确要求桥墩局部最大流速、冲刷或防护体局部流场时，再升级局部二维模型。
+\end{enumerate}
+
+\appendix
+\section{主要成果文件与可复现流程}
+
+\begin{longtable}{p{0.36\textwidth}p{0.57\textwidth}}
+\toprule
+文件/目录 & 用途 \\
+\midrule
+\endfirsthead
+\toprule
+文件/目录 & 用途 \\
+\midrule
+\endhead
+\path{hecras_model/} & 正式 HEC-RAS 主工程，含 p01--p07 输入和计算 HDF。 \\
+\path{results/hecras_steady_five_cases.csv} & 五个主工况关键断面结果。 \\
+\path{results/hecras_design_bed_sensitivity.csv} & 三种设计河床重建敏感性。 \\
+\path{results/hecras_boundary_sensitivity.csv} & 15 个下游边界敏感性 plan 明细。 \\
+\path{data/processed/design_bed/} & 设计河床重建、CAD 证据和审计记录。 \\
+\path{scripts/recover_design_bed.py} & 设计泥面控制点恢复与断面重建。 \\
+\path{scripts/build_hecras_project.py} & 正式 HEC-RAS 工程生成。 \\
+\path{scripts/extract_hecras_steady_results.py} & HDF 验收与五工况结果整理。 \\
+\path{scripts/build_hecras_boundary_sensitivity.py} & 下游边界敏感性工程生成。 \\
+\path{scripts/audit_bridge_geometry_evidence.py} & 显式桥梁结构资料审计。 \\
+\path{scripts/build_report_data.py} & 从正式结果自动生成本报告绘图数据。 \\
+\bottomrule
+\end{longtable}
+
+复现报告数据：
+\begin{verbatim}
+.venv/bin/python scripts/recover_design_bed.py
+.venv/bin/python scripts/build_report_data.py
+cd report
+xelatex -interaction=nonstopmode main.tex
+xelatex -interaction=nonstopmode main.tex
+\end{verbatim}
+
+\section{结果使用说明}
+本报告所有“设计河床”表述若无特别说明，均指\textbf{满足现有设计控制数据的水力筛选重建断面}，不是声称已经恢复原设计院完整设计河床图。所有“桥下流速”均为一维断面平均/代表流速，不应直接解释为桥墩局部最大流速。
+
+\end{document}

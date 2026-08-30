@@ -1,0 +1,44 @@
+# Python environments/cache
+.venv/
+.venv-hecras/
+__pycache__/
+*.py[cod]
+
+# Raw CAD and conversion payloads (large binary/text sources kept locally)
+data/*.dwg
+data/dxf/*.dxf
+data/dxf/*.dxf~
+data/dxf/logs/
+data/dxf/original-fonts/
+
+# HEC-RAS computed binary/run artifacts
+hecras_model/*.hdf
+hecras_model/*.O??
+hecras_model/*.r??
+hecras_boundary_sensitivity/*.hdf
+hecras_boundary_sensitivity/*.O??
+hecras_boundary_sensitivity/*.r??
+hecras_linux_run/
+hecras_validated/
+
+# Scratch/reference experiments
+scratch_conspan/
+vendor/
+
+# LaTeX build intermediates and rendered QA pages
+report/*.aux
+report/*.log
+report/*.toc
+report/*.out
+report/*.xdv
+report/*.fls
+report/*.fdb_latexmk
+report/rendered/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*~
+
+# Local CAD font cache (never version/share font binaries)
+.librecad-fonts/

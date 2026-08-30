@@ -1,0 +1,8 @@
+﻿plan,case,short_id,sensitivity_plan,bridge_profile,gross_area_at_wse_22.190_m2,target_blockage_m2,net_area_at_wse_22.190_m2,left_station_m,right_station_m,recomputed_blockage_m2
+p01,现状河床线,Current,False,data/processed/cross_sections/西支桥下.csv,7111.198255,360.000,6751.198255,199.468557,215.025305,360.000000
+p02,0.5m防冲刷,Protect05,False,data/processed/cross_sections/西支桥下.csv,7111.198255,380.000,6731.198255,199.015257,215.478604,380.000000
+p03,1.0m防冲刷,Protect10,False,data/processed/cross_sections/西支桥下.csv,7111.198255,390.000,6721.198255,198.788082,215.705780,390.000000
+p04,2.0m防冲刷,Protect20,False,data/processed/cross_sections/西支桥下.csv,7111.198255,410.000,6701.198255,198.332800,216.161062,410.000000
+p05,设计河床线,DesignBed,False,data/processed/design_bed/西支桥下_设计河床.csv,5980.000000,280.000,5700.000000,200.119760,214.374102,280.000000
+p06,设计河床线-局部型敏感性,DesignLocal,True,data/processed/design_bed/西支桥下_设计河床_局部型.csv,5980.000000,280.000,5700.000000,200.004210,214.489652,280.000000
+p07,设计河床线-分布型敏感性,DesignDistrib,True,data/processed/design_bed/西支桥下_设计河床_分布型.csv,5980.000000,280.000,5700.000000,200.295975,214.197887,280.000000
