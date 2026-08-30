@@ -11,7 +11,7 @@ from pathlib import Path
 import h5py
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_DIR = ROOT / "hecras_boundary_sensitivity"
+MODEL_DIR = ROOT / "models" / "boundary_sensitivity"
 RESULTS_DIR = ROOT / "results"
 PROJECT_BASENAME = "GanjiangWestBridgeBoundary"
 KEY_STATIONS = {"600", "500"}
@@ -139,13 +139,13 @@ def main() -> None:
 
     detail_path = RESULTS_DIR / "hecras_boundary_sensitivity.csv"
     with detail_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(detail_rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(detail_rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(detail_rows)
 
     validation_path = RESULTS_DIR / "hecras_boundary_sensitivity_validation.csv"
     with validation_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(validations[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(validations[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(validations)
 
@@ -177,7 +177,7 @@ def main() -> None:
 
     summary_path = RESULTS_DIR / "hecras_boundary_sensitivity_summary.csv"
     with summary_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(summary_rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(summary_rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(summary_rows)
 

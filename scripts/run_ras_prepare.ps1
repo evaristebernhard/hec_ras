@@ -1,6 +1,10 @@
 param(
-  [string]$Project = 'C:\Users\chaoy\hecras_linux_stage\GanjiangWestBridge.prj',
-  [string]$Plan = 'C:\Users\chaoy\hecras_linux_stage\GanjiangWestBridge.p01',
+  [Parameter(Mandatory=$true)]
+  [ValidateScript({ Test-Path $_ -PathType Leaf })]
+  [string]$Project,
+  [Parameter(Mandatory=$true)]
+  [ValidateScript({ Test-Path $_ -PathType Leaf })]
+  [string]$Plan,
   [int]$TimeoutSeconds = 90
 )
 

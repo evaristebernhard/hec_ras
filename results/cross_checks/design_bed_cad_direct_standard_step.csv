@@ -1,0 +1,11 @@
+﻿solver,case_id,case,river_m,section,wse_m,delta_wse_vs_current_m,energy_m,velocity_mps,effective_area_m2,froude,blockage_m2,downstream_known_ws_m
+python_standard_step_crosscheck,Current,现状河床线,-500.0,西支上游500米,22.673001,0.000000,23.172424,3.129750,8307.372,0.285515,360.000,22.049342
+python_standard_step_crosscheck,Current,现状河床线,-100.0,西支上游100米,22.420322,0.000000,23.037225,3.478434,7474.627,0.307509,360.000,22.049342
+python_standard_step_crosscheck,Current,现状河床线,0.0,西支桥下,22.190000,0.000000,22.946196,3.851168,6751.198,0.332281,360.000,22.049342
+python_standard_step_crosscheck,Current,现状河床线,100.0,西支下游100米,22.301766,0.000000,22.839346,3.247110,8007.120,0.317707,360.000,22.049342
+python_standard_step_crosscheck,Current,现状河床线,500.0,西支下游500米,22.049342,0.000000,22.697552,3.565603,7291.895,0.288877,360.000,22.049342
+python_standard_step_crosscheck,DesignBedCAD,设计河床线-CAD直接提取,-500.0,西支上游500米,22.889562,0.216561,23.371763,3.075314,8454.423,0.278523,280.000,22.049342
+python_standard_step_crosscheck,DesignBedCAD,设计河床线-CAD直接提取,-100.0,西支上游100米,22.647762,0.227440,23.243682,3.418765,7605.085,0.300008,280.000,22.049342
+python_standard_step_crosscheck,DesignBedCAD,设计河床线-CAD直接提取,0.0,西支桥下_设计河床_CAD直接提取,21.952243,-0.237757,23.077822,4.698544,5533.629,0.454561,280.000,22.049342
+python_standard_step_crosscheck,DesignBedCAD,设计河床线-CAD直接提取,100.0,西支下游100米,22.301766,0.000000,22.839346,3.247110,8007.120,0.317707,280.000,22.049342
+python_standard_step_crosscheck,DesignBedCAD,设计河床线-CAD直接提取,500.0,西支下游500米,22.049342,0.000000,22.697552,3.565603,7291.895,0.288877,280.000,22.049342

@@ -1,0 +1,7 @@
+﻿check,expected,actual,difference,status
+p05_geometry_source,CAD 01 direct construction-period ground line,data/processed/design_bed/西支桥下_设计河床.csv,0,PASS
+rs500_point_count,28,28,0,PASS
+rs500_station_max_abs_error_m,<=5e-5,2.63671875e-05,2.63671875e-05,PASS
+rs500_elevation_max_abs_error_m,<=5e-6,9.30786133e-07,9.30786133e-07,PASS
+rs500_obstruction_mode,1,1,0,PASS
+steady_compute_messages,finished; no warning/error,finished; no warning/error,0,PASS

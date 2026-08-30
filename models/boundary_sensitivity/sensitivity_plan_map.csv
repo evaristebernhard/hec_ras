@@ -1,0 +1,16 @@
+﻿plan,short_id,case_number,case_id,case_cn,blockage_m2,geometry,flow,boundary_id,downstream_wse_m,boundary_offset_from_base_m
+p01,Current_Low,1,Current,现状河床线,360.000,g01,f01,Low,21.549342,-0.500000
+p02,Protect05_Low,2,Protect05,0.5m防冲刷,380.000,g02,f01,Low,21.549342,-0.500000
+p03,Protect10_Low,3,Protect10,1.0m防冲刷,390.000,g03,f01,Low,21.549342,-0.500000
+p04,Protect20_Low,4,Protect20,2.0m防冲刷,410.000,g04,f01,Low,21.549342,-0.500000
+p05,DesignBedCAD_Low,5,DesignBedCAD,设计河床线-CAD直接提取,280.000,g05,f01,Low,21.549342,-0.500000
+p06,Current_Base,1,Current,现状河床线,360.000,g01,f02,Base,22.049342,0.000000
+p07,Protect05_Base,2,Protect05,0.5m防冲刷,380.000,g02,f02,Base,22.049342,0.000000
+p08,Protect10_Base,3,Protect10,1.0m防冲刷,390.000,g03,f02,Base,22.049342,0.000000
+p09,Protect20_Base,4,Protect20,2.0m防冲刷,410.000,g04,f02,Base,22.049342,0.000000
+p10,DesignBedCAD_Base,5,DesignBedCAD,设计河床线-CAD直接提取,280.000,g05,f02,Base,22.049342,0.000000
+p11,Current_High,1,Current,现状河床线,360.000,g01,f03,High,22.549342,0.500000
+p12,Protect05_High,2,Protect05,0.5m防冲刷,380.000,g02,f03,High,22.549342,0.500000
+p13,Protect10_High,3,Protect10,1.0m防冲刷,390.000,g03,f03,High,22.549342,0.500000
+p14,Protect20_High,4,Protect20,2.0m防冲刷,410.000,g04,f03,High,22.549342,0.500000
+p15,DesignBedCAD_High,5,DesignBedCAD,设计河床线-CAD直接提取,280.000,g05,f03,High,22.549342,0.500000

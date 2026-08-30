@@ -2,7 +2,8 @@
 from pathlib import Path
 import csv
 
-ROOT=Path('data/processed/cross_sections')
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ROOT = PROJECT_ROOT / 'data' / 'processed' / 'cross_sections'
 LEVELS=[14.960,22.190]
 
 def read_profile(path):

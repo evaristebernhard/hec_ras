@@ -3,7 +3,8 @@ from pathlib import Path
 from collections import Counter, defaultdict
 import math, re
 
-path = Path('data/dxf/西支5断面100-100，0906.dxf')
+ROOT = Path(__file__).resolve().parents[1]
+path = ROOT / 'data' / 'intermediate' / 'dxf' / '西支5断面100-100，0906.dxf'
 raw = path.read_text(encoding='utf-8-sig', errors='replace').splitlines()
 pairs=[]
 for i in range(0,len(raw)-1,2):

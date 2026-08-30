@@ -43,8 +43,9 @@ CONTRACTION_C = 0.10
 EXPANSION_C = 0.30
 PIER_DRAG_CD = 1.00
 
-ROOT = Path("data/processed/cross_sections")
-OUT = Path("results")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ROOT = PROJECT_ROOT / "data" / "processed" / "cross_sections"
+OUT = PROJECT_ROOT / "results" / "cross_checks"
 
 # River coordinate increases downstream.
 SECTION_FILES = [
@@ -300,10 +301,10 @@ def calibrate_downstream_wse(sections, n: float) -> float:
 
 
 def write_case_results(all_cases: Dict[str, List[State]], downstream_wse: float, n: float) -> None:
-    OUT.mkdir(exist_ok=True)
+    OUT.mkdir(parents=True, exist_ok=True)
     detail_path = OUT / "steady_1d_cases.csv"
     with detail_path.open("w", newline="", encoding="utf-8-sig") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow([
             "case", "river_m", "section", "wse_m", "raw_area_m2", "effective_area_m2",
             "blockage_m2", "velocity_m_s", "velocity_head_m", "energy_m", "friction_slope",
@@ -322,7 +323,7 @@ def write_case_results(all_cases: Dict[str, List[State]], downstream_wse: float,
     ref_up100 = next(s for s in all_cases[REFERENCE_CASE] if s.river_m == -100.0)
     summary_path = OUT / "steady_1d_summary.csv"
     with summary_path.open("w", newline="", encoding="utf-8-sig") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow([
             "case", "blockage_m2", "bridge_wse_m", "delta_bridge_wse_vs_current_m",
             "up100_wse_m", "delta_up100_wse_vs_current_m", "bridge_velocity_m_s",
@@ -351,10 +352,10 @@ def write_case_results(all_cases: Dict[str, List[State]], downstream_wse: float,
 
 
 def run_sensitivity(sections, calibrated_downstream_wse: float) -> None:
-    OUT.mkdir(exist_ok=True)
+    OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / "steady_1d_sensitivity.csv"
     with path.open("w", newline="", encoding="utf-8-sig") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow([
             "manning_n", "case", "downstream_wse_fixed_m", "bridge_wse_m",
             "delta_bridge_wse_vs_same_n_current_m", "up100_wse_m",

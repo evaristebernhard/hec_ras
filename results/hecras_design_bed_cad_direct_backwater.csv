@@ -1,0 +1,4 @@
+﻿solver,design_plan,geometry_source,river_station,role,current_baseline_wse_m,design_bed_wse_m,delta_wse_design_minus_current_m,delta_wse_mm,energy_grade_m,velocity_mps,flow_area_m2,froude,hdf_geometry_match
+HEC-RAS 7.0.1,p05,CAD01_direct,600,upstream_100m_backwater,22.383251,22.576809,0.193558,193.6,23.190306,3.437167,7564.370,0.302314,True
+HEC-RAS 7.0.1,p05,CAD01_direct,500,bridge_local_state,22.202982,21.962107,-0.240875,-240.9,23.088219,4.691635,5541.778,0.447357,True
+HEC-RAS 7.0.1,p05,CAD01_direct,1000,upstream_500m_backwater,22.651262,22.835306,0.184044,184.0,23.328188,3.088787,8417.543,0.280248,True

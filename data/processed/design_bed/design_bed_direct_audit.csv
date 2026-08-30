@@ -1,0 +1,7 @@
+﻿check,source_or_target,actual,difference,status
+station_strictly_increasing,>0,0.038052356,0,PASS
+semantic_label_to_leader_to_profile,gap<=0.05 CAD unit,0.0319587354606,0,PASS
+pier_design_mud_controls,15#=4.27;16#=5.40;17#=9.56 m,max_error=0.000000000 m,0.000000000,PASS
+gross_area_at_wse_22.190_m2,table-derived=5980.000,5934.568414,-45.431586,CAD_DIRECT_PRECEDENCE
+blocked_obstruction_m2,280.000,280.000000,0.000000,PASS
+net_area_at_wse_22.190_m2,table=5700.000,5654.568414,-45.431586,CAD_DIRECT_PRECEDENCE

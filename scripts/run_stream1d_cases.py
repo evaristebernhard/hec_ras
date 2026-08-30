@@ -35,8 +35,9 @@ TARGET_BRIDGE_WSE = 22.190
 CONTRACTION_C = 0.10
 EXPANSION_C = 0.30
 
-ROOT = Path("data/processed/cross_sections")
-OUT = Path("results")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ROOT = PROJECT_ROOT / "data" / "processed" / "cross_sections"
+OUT = PROJECT_ROOT / "results" / "cross_checks"
 
 # STREAM-1D expects larger river station upstream and smaller downstream.
 SECTION_FILES = [
@@ -192,7 +193,7 @@ def calibrate_downstream(width: float, current_top: float) -> float:
 
 
 def main() -> None:
-    OUT.mkdir(exist_ok=True)
+    OUT.mkdir(parents=True, exist_ok=True)
     raw_area = raw_bridge_area_at_target()
     print(f"STREAM-1D raw bridge area at WSE={TARGET_BRIDGE_WSE:.3f}: {raw_area:.3f} m2")
 
@@ -234,7 +235,7 @@ def main() -> None:
             tops_rows.append([width, case, blocked_area, tops[case]])
 
     with (OUT / "stream1d_four_cases.csv").open("w", newline="", encoding="utf-8-sig") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow([
             "equivalent_strip_width_m", "case", "target_blocked_area_m2", "obstruction_top_m",
             "calibrated_downstream_wse_m", "bridge_wse_m", "up100_wse_m",
@@ -244,7 +245,7 @@ def main() -> None:
         w.writerows(rows)
 
     with (OUT / "stream1d_obstruction_calibration.csv").open("w", newline="", encoding="utf-8-sig") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow([
             "equivalent_strip_width_m", "case", "target_blocked_area_m2", "obstruction_top_m",
         ])

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate and export the five main and two design-bed sensitivity plans.
+"""Validate and export the five active HEC-RAS steady-flow plans.
 
 The checks here are intentionally tied to the two silent failures encountered
 while creating the project: the project must be SI, and the bridge cross
@@ -17,7 +17,7 @@ import h5py
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_DIR = ROOT / "hecras_model"
+MODEL_DIR = ROOT / "models" / "main"
 RESULTS_DIR = ROOT / "results"
 
 LEGACY_PLANS = [
@@ -28,13 +28,11 @@ LEGACY_PLANS = [
 ]
 
 DESIGN_PLANS = [
-    ("p05", "DesignBed", "设计河床线-中心方案", 280.0),
-    ("p06", "DesignLocal", "设计河床线-局部型敏感性", 280.0),
-    ("p07", "DesignDistrib", "设计河床线-分布型敏感性", 280.0),
+    ("p05", "DesignBedCAD", "设计河床线-CAD直接提取", 280.0),
 ]
 
 PLANS = LEGACY_PLANS + DESIGN_PLANS
-MAIN_PLANS = LEGACY_PLANS + DESIGN_PLANS[:1]
+MAIN_PLANS = PLANS
 KEY_STATIONS = {"500", "600"}
 
 BASE = (
@@ -225,7 +223,7 @@ def main() -> None:
 
     if baseline_created:
         with frozen_path.open("w", newline="", encoding="utf-8-sig") as stream:
-            writer = csv.DictWriter(stream, fieldnames=["plan", "river_station", "wse_m"])
+            writer = csv.DictWriter(stream, fieldnames=["plan", "river_station", "wse_m"], lineterminator="\n")
             writer.writeheader()
             for plan, _short_id, _case, _blockage in LEGACY_PLANS:
                 for row in plan_rows[plan]:
@@ -239,7 +237,7 @@ def main() -> None:
 
     parity_path = RESULTS_DIR / "hecras_p01_p04_parity_v2.csv"
     with parity_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(parity_rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(parity_rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(parity_rows)
 
@@ -260,7 +258,7 @@ def main() -> None:
             "froude",
             "delta_wse_vs_p01_m",
         ]
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
+        writer = csv.DictWriter(stream, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for plan, short_id, case, blockage in LEGACY_PLANS:
             for row in plan_rows[plan]:
@@ -287,13 +285,13 @@ def main() -> None:
     # Keep the legacy validation filename limited to the original four plans.
     validation_path = RESULTS_DIR / "hecras_steady_validation.csv"
     with validation_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(validations[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(validations[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(validations[:4])
 
     validation_all_path = RESULTS_DIR / "hecras_steady_validation_all_plans.csv"
     with validation_all_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(validations[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(validations[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(validations)
 
@@ -342,68 +340,47 @@ def main() -> None:
 
     five_path = RESULTS_DIR / "hecras_steady_five_cases.csv"
     with five_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=metric_fields)
+        writer = csv.DictWriter(stream, fieldnames=metric_fields, lineterminator="\n")
         writer.writeheader()
         for plan, short_id, case, blockage in MAIN_PLANS:
             for row in plan_rows[plan]:
                 if str(row["river_station"]) in KEY_STATIONS:
                     writer.writerow(comparison_row(plan, short_id, case, blockage, row))
 
-    design_values: dict[str, dict[str, float]] = {}
-    for station in KEY_STATIONS:
-        values = {
-            plan: float(
-                next(row for row in plan_rows[plan] if str(row["river_station"]) == station)[
-                    "wse_m"
-                ]
-            )
-            for plan, _short_id, _case, _blockage in DESIGN_PLANS
-        }
-        center_effect = abs(values["p05"] - baseline[station])
-        spread = max(values.values()) - min(values.values())
-        design_values[station] = {
-            "spread": spread,
-            "center_effect": center_effect,
-            "ratio": spread / center_effect if center_effect else math.inf,
-        }
-
-    sensitivity_fields = metric_fields + [
-        "delta_wse_vs_p05_m",
-        "reconstruction_wse_range_m",
-        "center_effect_vs_current_m",
-        "range_to_center_effect_ratio",
-        "stable_screening_value_under_20pct_rule",
-    ]
-    sensitivity_path = RESULTS_DIR / "hecras_design_bed_sensitivity.csv"
-    with sensitivity_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=sensitivity_fields)
+    backwater_rows = []
+    for station, role in (("600", "upstream_100m_backwater"), ("500", "bridge_local_state")):
+        current = next(
+            row for row in plan_rows["p01"] if str(row["river_station"]) == station
+        )
+        design = next(
+            row for row in plan_rows["p05"] if str(row["river_station"]) == station
+        )
+        delta = float(design["wse_m"]) - float(current["wse_m"])
+        backwater_rows.append(
+            {
+                "solver": "HEC-RAS 7.0.1",
+                "current_plan": "p01",
+                "design_plan": "p05",
+                "river_station": station,
+                "role": role,
+                "current_wse_m": f"{float(current['wse_m']):.6f}",
+                "design_bed_cad_wse_m": f"{float(design['wse_m']):.6f}",
+                "delta_wse_design_minus_current_m": f"{delta:.6f}",
+                "delta_wse_mm": f"{delta*1000.0:.1f}",
+                "geometry_source": "CAD 01 label->leader->entity 450505",
+            }
+        )
+    backwater_path = RESULTS_DIR / "hecras_design_bed_cad_direct_backwater.csv"
+    with backwater_path.open("w", newline="", encoding="utf-8-sig") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(backwater_rows[0]), lineterminator="\n")
         writer.writeheader()
-        for plan, short_id, case, blockage in DESIGN_PLANS:
-            for row in plan_rows[plan]:
-                station = str(row["river_station"])
-                if station not in KEY_STATIONS:
-                    continue
-                output = comparison_row(plan, short_id, case, blockage, row)
-                center = next(
-                    item for item in plan_rows["p05"] if str(item["river_station"]) == station
-                )
-                stats = design_values[station]
-                output.update(
-                    {
-                        "delta_wse_vs_p05_m": f"{float(row['wse_m']) - float(center['wse_m']):.6f}",
-                        "reconstruction_wse_range_m": f"{stats['spread']:.6f}",
-                        "center_effect_vs_current_m": f"{stats['center_effect']:.6f}",
-                        "range_to_center_effect_ratio": f"{stats['ratio']:.6f}",
-                        "stable_screening_value_under_20pct_rule": stats["ratio"] < 0.20,
-                    }
-                )
-                writer.writerow(output)
+        writer.writerows(backwater_rows)
 
     print(f"Validated {len(PLANS)} HEC-RAS plans")
     print(f"Wrote {detail_path}")
     print(f"Wrote {validation_path}")
     print(f"Wrote {five_path}")
-    print(f"Wrote {sensitivity_path}")
+    print(f"Wrote {backwater_path}")
     if baseline_created:
         print("[V2 BASELINE CREATED] corrected p01-p04 matched boundary-sensitivity Base runs")
     else:

@@ -21,7 +21,7 @@ from matplotlib.patches import Circle, Arc
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-DXF_DIR = ROOT / "data" / "dxf"
+DXF_DIR = ROOT / "data" / "intermediate" / "dxf"
 FIG_DIR = ROOT / "report" / "figures"
 PDF_DIR = ROOT / "report" / "cad_render"
 
@@ -74,7 +74,7 @@ VIEWS = [
     ),
     View(
         "cad_bridge_plan",
-        "xizhichengguo.dxf",
+        "西支成果.dxf",
         396700, 400050, 3187700, 3191000,
         "西支成果桥位 CAD 视图",
         80,

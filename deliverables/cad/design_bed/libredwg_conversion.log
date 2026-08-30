@@ -1,6 +1,6 @@
 ===== 西支5断面_桥下设计河床_三方案叠加_R2013.dxf -> 西支5断面_桥下设计河床_三方案叠加_R2004.dwg =====
 Reading DXF file /home/ubuntu/hec_ras/deliverables/cad/design_bed/西支5断面_桥下设计河床_三方案叠加_R2013.dxf
-Writing DWG file /home/ubuntu/hec_ras/deliverables/cad/design_bed/dwg/西支5断面_桥下设计河床_三方案叠加_R2004.dwg as r2004
+Writing DWG file /home/ubuntu/hec_ras/deliverables/cad/design_bed/dwg/.dwg-build-5zah0r4p/西支5断面_桥下设计河床_三方案叠加_R2004.dwg as r2004
 Warning: 
 Object TABLESTYLE unsupported
 Warning: Unstable Class object 505 TABLESTYLE (0xfff) 1801/4C6
@@ -9,7 +9,7 @@ Warning: HATCH.num_seeds 1 but seeds NULL; force 0
 
 ===== 西支5断面_桥下设计河床_中心方案_叠加_R2013.dxf -> 西支5断面_桥下设计河床_中心方案_叠加_R2004.dwg =====
 Reading DXF file /home/ubuntu/hec_ras/deliverables/cad/design_bed/西支5断面_桥下设计河床_中心方案_叠加_R2013.dxf
-Writing DWG file /home/ubuntu/hec_ras/deliverables/cad/design_bed/dwg/西支5断面_桥下设计河床_中心方案_叠加_R2004.dwg as r2004
+Writing DWG file /home/ubuntu/hec_ras/deliverables/cad/design_bed/dwg/.dwg-build-5zah0r4p/西支5断面_桥下设计河床_中心方案_叠加_R2004.dwg as r2004
 Warning: 
 Object TABLESTYLE unsupported
 Warning: Unstable Class object 505 TABLESTYLE (0xfff) 1799/4C6
@@ -18,7 +18,7 @@ Warning: HATCH.num_seeds 1 but seeds NULL; force 0
 
 ===== 西支5断面_桥下设计河床_分布型_叠加_R2013.dxf -> 西支5断面_桥下设计河床_分布型_叠加_R2004.dwg =====
 Reading DXF file /home/ubuntu/hec_ras/deliverables/cad/design_bed/西支5断面_桥下设计河床_分布型_叠加_R2013.dxf
-Writing DWG file /home/ubuntu/hec_ras/deliverables/cad/design_bed/dwg/西支5断面_桥下设计河床_分布型_叠加_R2004.dwg as r2004
+Writing DWG file /home/ubuntu/hec_ras/deliverables/cad/design_bed/dwg/.dwg-build-5zah0r4p/西支5断面_桥下设计河床_分布型_叠加_R2004.dwg as r2004
 Warning: 
 Object TABLESTYLE unsupported
 Warning: Unstable Class object 505 TABLESTYLE (0xfff) 1799/4C6
@@ -27,7 +27,7 @@ Warning: HATCH.num_seeds 1 but seeds NULL; force 0
 
 ===== 西支5断面_桥下设计河床_局部型_叠加_R2013.dxf -> 西支5断面_桥下设计河床_局部型_叠加_R2004.dwg =====
 Reading DXF file /home/ubuntu/hec_ras/deliverables/cad/design_bed/西支5断面_桥下设计河床_局部型_叠加_R2013.dxf
-Writing DWG file /home/ubuntu/hec_ras/deliverables/cad/design_bed/dwg/西支5断面_桥下设计河床_局部型_叠加_R2004.dwg as r2004
+Writing DWG file /home/ubuntu/hec_ras/deliverables/cad/design_bed/dwg/.dwg-build-5zah0r4p/西支5断面_桥下设计河床_局部型_叠加_R2004.dwg as r2004
 Warning: 
 Object TABLESTYLE unsupported
 Warning: Unstable Class object 505 TABLESTYLE (0xfff) 1799/4C6

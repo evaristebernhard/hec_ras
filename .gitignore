@@ -1,32 +1,27 @@
-# Python environments/cache
+# Python environment and caches
 .venv/
-.venv-hecras/
-.venv-cad/
 __pycache__/
 *.py[cod]
 
-# Raw CAD and conversion payloads (large binary/text sources kept locally)
-data/*.dwg
-data/dxf/*.dxf
-data/dxf/*.dxf~
-data/dxf/logs/
-data/dxf/original-fonts/
+# Source CAD is retained locally; Git tracks only derived evidence and delivery files.
+data/raw/cad/*
+!data/raw/cad/.gitkeep
+data/intermediate/dxf/*.dxf
+data/intermediate/dxf/*.dxf~
+data/intermediate/dxf/logs/
+data/intermediate/dxf/original-fonts/
 
-# HEC-RAS computed binary/run artifacts
-hecras_model/*.hdf
-hecras_model/*.O??
-hecras_model/*.r??
-hecras_boundary_sensitivity/*.hdf
-hecras_boundary_sensitivity/*.O??
-hecras_boundary_sensitivity/*.r??
-hecras_linux_run/
-hecras_validated/
+# HEC-RAS input text is versioned; solver run/HDF payloads remain local.
+models/main/*.hdf
+models/main/*.O??
+models/main/*.r??
+models/main/ras_prepare_dialogs.log
+models/boundary_sensitivity/*.hdf
+models/boundary_sensitivity/*.O??
+models/boundary_sensitivity/*.r??
+models/boundary_sensitivity/ras_prepare_dialogs.log
 
-# Scratch/reference experiments
-scratch_conspan/
-vendor/
-
-# LaTeX build intermediates and rendered QA pages
+# LaTeX and rendering intermediates
 report/*.aux
 report/*.log
 report/*.toc
@@ -37,16 +32,9 @@ report/*.fdb_latexmk
 report/rendered/
 report/cad_render/
 
-# Temporary transfer/chunk artifacts
-report/*.b64
-report/pdfchunk_*
-report/s2_*.txt
-report/shotchunk_*.txt
-
-# OS/editor noise
+# Editor/OS autosaves and local CAD font cache
 .DS_Store
 Thumbs.db
 *~
-
-# Local CAD font cache (never version/share font binaries)
+deliverables/cad/design_bed/\#*
 .librecad-fonts/

@@ -20,10 +20,9 @@ Its lateral limits are solved so that, at the CAD-labelled flood level of
 blocked area.  The obstruction top is kept numerically above all modeled water
 levels so the equivalent pier blockage cannot be artificially overtopped.
 
-The fifth main plan replaces only RS 500 with the centre constrained
-design-bed reconstruction and uses a 280 m2 obstruction.  Two additional
-plans carry the local and distributed reconstruction sensitivity geometries;
-they are not part of the main five-case numbering convention.
+The fifth plan replaces only RS 500 with the construction-period ground line
+recovered directly from CAD 01 and uses a 280 m2 obstruction.  The former
+centre/local/distributed constrained reconstructions are retired.
 
 This is an equivalent 1D blockage representation, not a detailed bridge-pier
 model.  It is deliberately kept simple so that the first HEC-RAS calculation
@@ -40,7 +39,7 @@ from typing import Iterable, List, Sequence, Tuple
 ROOT = Path(__file__).resolve().parents[1]
 XS_DIR = ROOT / "data" / "processed" / "cross_sections"
 DESIGN_BED_DIR = ROOT / "data" / "processed" / "design_bed"
-OUT_DIR = ROOT / "hecras_model"
+OUT_DIR = ROOT / "models" / "main"
 PROJECT_BASENAME = "GanjiangWestBridge"
 
 Q = 26000.0
@@ -75,15 +74,12 @@ SECTIONS = [
 ]
 
 CASES = [
-    # plan/geometry number, Chinese name, short id, blockage, RS 500 profile,
-    # sensitivity flag
-    (1, "现状河床线", "Current", 360.0, XS_DIR / "西支桥下.csv", False),
-    (2, "0.5m防冲刷", "Protect05", 380.0, XS_DIR / "西支桥下.csv", False),
-    (3, "1.0m防冲刷", "Protect10", 390.0, XS_DIR / "西支桥下.csv", False),
-    (4, "2.0m防冲刷", "Protect20", 410.0, XS_DIR / "西支桥下.csv", False),
-    (5, "设计河床线", "DesignBed", 280.0, DESIGN_BED_DIR / "西支桥下_设计河床.csv", False),
-    (6, "设计河床线-局部型敏感性", "DesignLocal", 280.0, DESIGN_BED_DIR / "西支桥下_设计河床_局部型.csv", True),
-    (7, "设计河床线-分布型敏感性", "DesignDistrib", 280.0, DESIGN_BED_DIR / "西支桥下_设计河床_分布型.csv", True),
+    # plan/geometry number, Chinese name, short id, blockage, RS 500 profile
+    (1, "现状河床线", "Current", 360.0, XS_DIR / "西支桥下.csv"),
+    (2, "0.5m防冲刷", "Protect05", 380.0, XS_DIR / "西支桥下.csv"),
+    (3, "1.0m防冲刷", "Protect10", 390.0, XS_DIR / "西支桥下.csv"),
+    (4, "2.0m防冲刷", "Protect20", 410.0, XS_DIR / "西支桥下.csv"),
+    (5, "设计河床线-CAD直接提取", "DesignBedCAD", 280.0, DESIGN_BED_DIR / "西支桥下_设计河床.csv"),
 ]
 
 Point = Tuple[float, float]
@@ -334,9 +330,9 @@ def project_text() -> str:
         "Default Poro=0",
         "Default Short ID=Plan",
     ]
-    for number, _cn_name, short_id, _blockage, _profile, _sensitivity in CASES:
+    for number, _cn_name, short_id, _blockage, _profile in CASES:
         lines.extend([f"Plan File=p{number:02d}", f"Plan Title={short_id}"])
-    for number, _cn_name, short_id, _blockage, _profile, _sensitivity in CASES:
+    for number, _cn_name, short_id, _blockage, _profile in CASES:
         lines.extend([f"Geom File=g{number:02d}", f"Geom Title={short_id}"])
     lines.extend(["Flow File=f01", "Flow Title=Q26000", ""])
     return "\n".join(lines)
@@ -344,6 +340,13 @@ def project_text() -> str:
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # p06/p07 and g06/g07 belonged to the retired constrained-reconstruction
+    # sensitivity study. Remove only those generated text inputs; historical
+    # binary artifacts may remain for archival traceability but are not plans.
+    for number in (6, 7):
+        for kind in ("p", "g"):
+            (OUT_DIR / f"{PROJECT_BASENAME}.{kind}{number:02d}").unlink(missing_ok=True)
 
     (OUT_DIR / f"{PROJECT_BASENAME}.prj").write_text(
         project_text(), encoding="ascii", newline="\r\n"
@@ -353,7 +356,7 @@ def main() -> None:
     )
 
     audit_rows = []
-    for number, cn_name, short_id, blockage, bridge_profile_path, sensitivity in CASES:
+    for number, cn_name, short_id, blockage, bridge_profile_path in CASES:
         title = short_id
         gpath = OUT_DIR / f"{PROJECT_BASENAME}.g{number:02d}"
         ppath = OUT_DIR / f"{PROJECT_BASENAME}.p{number:02d}"
@@ -373,7 +376,6 @@ def main() -> None:
                 number,
                 cn_name,
                 short_id,
-                sensitivity,
                 bridge_profile_path.relative_to(ROOT),
                 gross_area,
                 blockage,
@@ -385,13 +387,12 @@ def main() -> None:
         )
 
     with (OUT_DIR / "blockage_audit.csv").open("w", newline="", encoding="utf-8-sig") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(
             [
                 "plan",
                 "case",
                 "short_id",
-                "sensitivity_plan",
                 "bridge_profile",
                 "gross_area_at_wse_22.190_m2",
                 "target_blockage_m2",
@@ -408,21 +409,20 @@ def main() -> None:
                     row[1],
                     row[2],
                     row[3],
-                    row[4],
-                    f"{row[5]:.6f}",
-                    f"{row[6]:.3f}",
+                    f"{row[4]:.6f}",
+                    f"{row[5]:.3f}",
+                    f"{row[6]:.6f}",
                     f"{row[7]:.6f}",
                     f"{row[8]:.6f}",
                     f"{row[9]:.6f}",
-                    f"{row[10]:.6f}",
                 ]
             )
 
     print(f"Built HEC-RAS project in {OUT_DIR}")
     for row in audit_rows:
         print(
-            f"p{row[0]:02d} {row[1]:18s}: gross={row[5]:.3f}, "
-            f"blockage={row[10]:.3f}, net={row[7]:.3f} m2"
+            f"p{row[0]:02d} {row[1]:18s}: gross={row[4]:.3f}, "
+            f"blockage={row[9]:.3f}, net={row[6]:.3f} m2"
         )
 
 

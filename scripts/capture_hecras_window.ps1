@@ -1,6 +1,9 @@
 param(
-  [string]$Project = 'C:\Users\chaoy\hecras_main_v2\GanjiangWestBridge.prj',
-  [string]$Output = '\\wsl.localhost\Ubuntu\home\ubuntu\hec_ras\report\figures\hecras_project_window.png'
+  [Parameter(Mandatory=$true)]
+  [ValidateScript({ Test-Path $_ -PathType Leaf })]
+  [string]$Project,
+  [Parameter(Mandatory=$true)]
+  [string]$Output
 )
 
 Add-Type -AssemblyName System.Drawing

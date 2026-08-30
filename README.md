@@ -1,55 +1,75 @@
 # 赣江西支桥位一维行洪分析
 
-当前状态与结果请先读：[`doc/项目当前状态.md`](doc/项目当前状态.md)。正式计算报告见 [`report/main.tex`](report/main.tex)，编译版为 `report/main.pdf`。
+本仓库回答一个明确问题：在相同流量、糙率、河道断面和下游边界下，桥墩防冲刷增量及设计河床筛选断面对上游水位产生多大影响？
 
-截至 2026-08-30，HEC-RAS 7.0.1 一维稳定流计算已完成：
+## 已验证结论
 
-- 五个主工况：现状河床、0.5 m / 1.0 m / 2.0 m 防冲刷、设计河床筛选方案；
-- 两个设计河床重建敏感性工况；
-- 下游控制水位 ±0.50 m 的 15-plan 敏感性分析；
-- HDF 单位、阻水模式、完成标记及 warning/error 自动验收；
-- 等效阻水 v2 修正：22.190 m 仅用于校准阻水面积，阻水顶采用数值哨兵避免人工越顶。
+在 `Q=26,000 m³/s`、`n=0.030`、下游已知水位 `22.049342 m` 的 HEC-RAS 7.0.1 一维稳定流模型中，RS 600（桥上游约 100 m）相对现状的水位变化为：
 
-基准下游已知水位 22.049342 m、Q=26,000 m³/s、Manning n=0.030 时，桥上游 100 m（RS=600）相对现状新增壅水为：
+| 主工况 | ΔWSE |
+|---|---:|
+| 0.5 m 防冲刷 | +2.525 mm |
+| 1.0 m 防冲刷 | +3.803 mm |
+| 2.0 m 防冲刷 | +6.382 mm |
+| 设计河床中心重建 | +182.556 mm |
 
-- 0.5 m 防护：**+2.525 mm**；
-- 1.0 m 防护：**+3.803 mm**；
-- 2.0 m 防护：**+6.382 mm**；
-- 设计河床筛选方案：**+182.556 mm**。
+三种合规设计河床重建在 RS 600 的离散范围为 `0.177 mm`；p01–p04 与冻结的 v2 基线逐断面差值均小于 `1×10⁻⁶ m`。**[PARITY VERIFIED]**
 
-三种防护在下游水位上下变化 0.50 m 时仍保持毫米级附加壅水。设计河床三种合理重建在关键断面的 WSE 差仅约 0.10–0.18 mm。
+这些数值是整体行洪筛选结果，不是局部桥墩流态或冲刷深度结论。设计河床是约束重建，不是原设计院完整断面。
 
-> 注意：当前“设计河床线”是依据 CAD 中 15#/16#/17# 设计泥面控制点和 5700 m² 净行洪面积构造的水力筛选断面，不是声称已恢复原设计院完整设计河床线。当前模型也是一维等效阻水模型，不是显式 Bridge/Culvert 或二维局部冲刷模型。
+## 第一性原理结构
 
-## 主要入口
+仓库只保留一条活动证据链：
 
-- 正式 HEC-RAS 工程：`hecras_model/`
-- 五工况关键结果：`results/hecras_steady_five_cases.csv`
-- 设计河床敏感性：`results/hecras_design_bed_sensitivity.csv`
-- 下游边界敏感性：`results/hecras_boundary_sensitivity.csv`
-- 当前状态说明：`doc/项目当前状态.md`
-- 正式 LaTeX 报告：`report/main.tex`
-- 报告 PDF：`report/main.pdf`
-- 模型生成：`scripts/build_hecras_project.py`
-- HDF 验收与提取：`scripts/extract_hecras_steady_results.py`
-- 设计河床恢复：`scripts/recover_design_bed.py`
-- 报告数据生成：`scripts/build_report_data.py`
-
-## 报告复现
-
-```bash
-.venv/bin/python scripts/recover_design_bed.py
-.venv/bin/python scripts/build_report_data.py
-cd report
-xelatex -interaction=nonstopmode main.tex
-xelatex -interaction=nonstopmode main.tex
+```text
+原始 CAD → 可读 DXF → 可追溯断面/控制点 → 明示假设的模型输入
+         → HEC-RAS 活体 HDF 验收 → 结果表 → 报告/交付件
 ```
 
-## 当前剩余资料缺口
+| 层级 | 目录 | 唯一职责 |
+|---|---|---|
+| 原始事实 | `data/raw/` | 本地原始 CAD；大文件不进入 Git |
+| 中间表示 | `data/intermediate/` | 可解析 DXF；可由原始 CAD 再生 |
+| 结构化证据 | `data/processed/` | 断面、CAD 实体证据、设计河床重建与审计 |
+| 模型输入 | `models/` | 主工程和下游边界敏感性工程 |
+| 数值结果 | `results/` | HDF 提取结果与自动验收；交叉校核单独隔离 |
+| 方法与结论 | `docs/` | 方法、复现、活动结论，不重复保存流水账 |
+| 正式报告 | `report/` | `main.tex`、`main.pdf` 及其可再生图表数据 |
+| 对外交付 | `deliverables/` | CAD/DWG/CSV/校验清单和确定性 ZIP |
+| 历史材料 | `archive/` | 已停用 v1 口径，仅供追溯，禁止被活动流程引用 |
 
-1. 原始/正式设计河床整治线；
-2. 桥面、梁底/低弦、桥下净空及完整桥墩迎水尺寸；
+证据优先级为：计算 HDF 与运行消息 > 提取结果 > 模型输入 > 重建脚本 > 说明文档。文档不能推翻已验证的计算行为。
+
+## 入口
+
+- [方法与边界](docs/methodology.md)
+- [从空环境复现](docs/reproducibility.md)
+- [活动结果与缺口](docs/findings.md)
+- [正式 PDF 报告](report/main.pdf)
+- [五工况结果](results/hecras_steady_five_cases.csv)
+- [设计河床 CAD 交付](deliverables/cad/design_bed/README.md)
+
+## 常用命令
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+
+make processed       # DXF → 断面与设计河床
+make evidence        # CAD 文本/实体索引
+make model-inputs    # 重建 HEC-RAS 文本输入；随后必须外部重算
+make extract-results # 验收已有 HDF 并提取 CSV
+make report          # 重建报告数据、图件和 PDF
+make verify          # 活动结构、约束、HDF 结果、parity、交付哈希
+```
+
+`make model-inputs` 会改变模型输入，因此不会被 `make verify` 隐式调用。完整的外部 HEC-RAS 执行边界见 [复现说明](docs/reproducibility.md)。
+
+## 尚未闭合的输入
+
+1. 可独立验证的原设计完整河床断面；
+2. 桥面、梁底/低弦、净空和完整迎水几何；
 3. 正式下游设计控制水位或水位–流量关系；
-4. Manning n 的项目最终依据。
+4. Manning `n=0.030` 的项目最终依据。
 
-上述资料补齐后，才有必要决定是否升级为显式 Bridge/Culvert；只有明确要求局部流速和冲刷评价时，再升级二维模型。
+在这些输入补齐前，不把当前等效阻水模型包装成显式 Bridge/Culvert、二维局部流态或正式冲刷结论。

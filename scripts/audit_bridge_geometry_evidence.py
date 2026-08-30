@@ -9,23 +9,25 @@ clearances, caps, pile caps, and related dimensions.
 from __future__ import annotations
 
 import csv
+import argparse
 from pathlib import Path
 
 from recover_design_bed import iter_dxf_entities
 
 ROOT = Path(__file__).resolve().parents[1]
+DXF_DIR = ROOT / "data" / "intermediate" / "dxf"
 FILES = [
-    (ROOT / "data/dxf/01-赣江西支特大桥抗冲刷防护（水下不分散混凝土）.dxf", "gb18030"),
+    (DXF_DIR / "01-赣江西支特大桥抗冲刷防护（水下不分散混凝土）.dxf", "gb18030"),
     # LibreDWG conversions in the remaining drawings are not guaranteed to
     # preserve the same text encoding.  Scan the plausible encodings; exact
     # Chinese keyword matching naturally rejects the incorrectly decoded pass.
-    (ROOT / "data/dxf/02赣江西支特大桥等值线图.dxf", "utf-8-sig"),
-    (ROOT / "data/dxf/02赣江西支特大桥等值线图.dxf", "gb18030"),
-    (ROOT / "data/dxf/xizhichengguo.dxf", "utf-8-sig"),
-    (ROOT / "data/dxf/xizhichengguo.dxf", "gb18030"),
-    (ROOT / "data/dxf/西支5断面100-100，0906.dxf", "utf-8-sig"),
+    (DXF_DIR / "02赣江西支特大桥等值线图.dxf", "utf-8-sig"),
+    (DXF_DIR / "02赣江西支特大桥等值线图.dxf", "gb18030"),
+    (DXF_DIR / "西支成果.dxf", "utf-8-sig"),
+    (DXF_DIR / "西支成果.dxf", "gb18030"),
+    (DXF_DIR / "西支5断面100-100，0906.dxf", "utf-8-sig"),
 ]
-OUT = ROOT / "doc/bridge_geometry_evidence.csv"
+OUT = ROOT / "data" / "processed" / "evidence" / "bridge_geometry_evidence.csv"
 
 KEYWORDS = [
     "桥面",
@@ -48,7 +50,7 @@ KEYWORDS = [
 ]
 
 
-def main() -> None:
+def main(verbose: bool = False) -> None:
     rows: list[dict[str, str]] = []
     for path, encoding in FILES:
         for entity in iter_dxf_entities(path, encoding):
@@ -76,14 +78,17 @@ def main() -> None:
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]) if rows else ["file", "text"])
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]) if rows else ["file", "text"], lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
     print(f"Wrote {len(rows)} bridge-geometry text hits to {OUT}")
-    for row in rows[:80]:
-        print(f"[{row['file']}] {row['matched_keywords']}: {row['text'][:220]}")
+    if verbose:
+        for row in rows[:80]:
+            print(f"[{row['file']}] {row['matched_keywords']}: {row['text'][:220]}")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--verbose", action="store_true", help="print matched CAD text")
+    main(parser.parse_args().verbose)

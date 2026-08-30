@@ -4,7 +4,7 @@
 This project reuses the five main geometries from build_hecras_project.py but
 runs each one at three downstream known-water-surface elevations: baseline
 +/-0.50 m.  It is intentionally written to a separate directory so the
-validated p01-p07 engineering model is never overwritten.
+active five-plan engineering model is never overwritten.
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ from pathlib import Path
 import build_hecras_project as base
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_DIR = ROOT / "hecras_boundary_sensitivity"
+OUT_DIR = ROOT / "models" / "boundary_sensitivity"
 PROJECT_BASENAME = "GanjiangWestBridgeBoundary"
 
 BOUNDARIES = [
@@ -77,7 +77,7 @@ def project_text(plan_rows: list[dict[str, object]]) -> str:
     ]
     for row in plan_rows:
         lines.extend([f"Plan File={row['plan']}", f"Plan Title={row['short_id']}"])
-    for case_number, _cn_name, short_id, _blockage, _profile, _sensitivity in MAIN_CASES:
+    for case_number, _cn_name, short_id, _blockage, _profile in MAIN_CASES:
         lines.extend([f"Geom File=g{case_number:02d}", f"Geom Title={short_id}"])
     for flow_number, boundary_id, _wse in BOUNDARIES:
         lines.extend([f"Flow File=f{flow_number:02d}", f"Flow Title=Q26000_{boundary_id}"])
@@ -87,14 +87,21 @@ def project_text(plan_rows: list[dict[str, object]]) -> str:
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    # Remove stale HEC-RAS inputs/results from previous sensitivity runs before
-    # rebuilding.  This directory is isolated from the validated main model.
-    for existing in OUT_DIR.glob(f"{PROJECT_BASENAME}.*"):
-        if existing.is_file():
-            existing.unlink()
+    # Remove only generated text inputs.  Computed HDF/run artifacts are live
+    # evidence and must never be erased implicitly by an input builder.
+    input_patterns = [
+        f"{PROJECT_BASENAME}.f??",
+        f"{PROJECT_BASENAME}.g??",
+        f"{PROJECT_BASENAME}.p??",
+        f"{PROJECT_BASENAME}.prj",
+    ]
+    for pattern in input_patterns:
+        for existing in OUT_DIR.glob(pattern):
+            if existing.is_file():
+                existing.unlink()
 
     # The five geometry files are identical to the main five-case model.
-    for case_number, _cn_name, short_id, blockage, profile_path, _sensitivity in MAIN_CASES:
+    for case_number, _cn_name, short_id, blockage, profile_path in MAIN_CASES:
         path = OUT_DIR / f"{PROJECT_BASENAME}.g{case_number:02d}"
         path.write_text(
             base.geometry_text(short_id, blockage, profile_path),
@@ -109,7 +116,7 @@ def main() -> None:
     plan_rows: list[dict[str, object]] = []
     plan_number = 0
     for flow_number, boundary_id, downstream_wse in BOUNDARIES:
-        for case_number, cn_name, case_id, blockage, _profile_path, _sensitivity in MAIN_CASES:
+        for case_number, cn_name, case_id, blockage, _profile_path in MAIN_CASES:
             plan_number += 1
             plan = f"p{plan_number:02d}"
             short_id = f"{case_id}_{boundary_id}"
@@ -141,7 +148,7 @@ def main() -> None:
 
     map_path = OUT_DIR / "sensitivity_plan_map.csv"
     with map_path.open("w", newline="", encoding="utf-8-sig") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(plan_rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(plan_rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(plan_rows)
 

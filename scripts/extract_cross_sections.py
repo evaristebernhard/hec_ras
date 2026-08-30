@@ -4,8 +4,9 @@ from collections import defaultdict
 from statistics import median
 import csv, math, re
 
-SRC = Path('data/dxf/西支5断面100-100，0906.dxf')
-OUT = Path('data/processed/cross_sections')
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / 'data' / 'intermediate' / 'dxf' / '西支5断面100-100，0906.dxf'
+OUT = ROOT / 'data' / 'processed' / 'cross_sections'
 OUT.mkdir(parents=True, exist_ok=True)
 
 lines = SRC.read_text(encoding='utf-8-sig', errors='replace').splitlines()
@@ -104,12 +105,12 @@ for p in profiles:
     safe=re.sub(r'[\\/:*?"<>| ]+','_',name)
     out=OUT/f'{safe}.csv'
     with out.open('w',encoding='utf-8-sig',newline='') as fh:
-        w=csv.writer(fh); w.writerow(['point_index','station_m_raw_direction','elevation_m','cad_x','cad_y']); w.writerows(rows)
+        w=csv.writer(fh, lineterminator='\n'); w.writerow(['point_index','station_m_raw_direction','elevation_m','cad_x','cad_y']); w.writerows(rows)
     st=[r[1] for r in rows]; el=[r[2] for r in rows]
-    summary.append((name,len(rows),st[0],st[-1],min(st),max(st),min(el),max(el),scale,y0,out))
+    summary.append((name,len(rows),st[0],st[-1],min(st),max(st),min(el),max(el),scale,y0,out.relative_to(ROOT)))
 
 with (OUT/'summary.csv').open('w',encoding='utf-8-sig',newline='') as fh:
-    w=csv.writer(fh)
+    w=csv.writer(fh, lineterminator='\n')
     w.writerow(['section','points','station_first_m','station_last_m','station_min_m','station_max_m','elev_min_m','elev_max_m','vertical_scale_cad_per_m','elev0_cad_y','csv'])
     for s in summary:
         w.writerow([*s[:-1],str(s[-1])])

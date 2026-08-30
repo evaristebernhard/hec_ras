@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-from pathlib import Path
 from collections import Counter, defaultdict
+from pathlib import Path
 import json, math, re, sys
 
-ROOT = Path(sys.argv[1] if len(sys.argv) > 1 else 'data/dxf')
-OUT = Path(sys.argv[2] if len(sys.argv) > 2 else 'doc/dxf_inspection.json')
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+VERBOSE = '--verbose' in sys.argv[1:]
+POSITIONAL = [arg for arg in sys.argv[1:] if arg != '--verbose']
+DXF_ROOT = Path(POSITIONAL[0]).resolve() if POSITIONAL else PROJECT_ROOT / 'data' / 'intermediate' / 'dxf'
+OUT = Path(POSITIONAL[1]).resolve() if len(POSITIONAL) > 1 else PROJECT_ROOT / 'data' / 'processed' / 'evidence' / 'dxf_inventory.json'
 
 
 def read_text(path: Path):
@@ -133,17 +136,18 @@ def inspect(path: Path):
         'text_samples': text_items[:100],
     }
 
-files = sorted([p for p in ROOT.glob('*.dxf') if p.is_file()])
+files = sorted([p for p in DXF_ROOT.glob('*.dxf') if p.is_file()])
 results = [inspect(p) for p in files]
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
 print(f'Wrote {OUT} for {len(results)} DXF files')
-for r in results:
-    print('\n'+Path(r['file']).name)
-    print('  size:', r['bytes'], 'acad:', r['acadver'], 'encoding:', r['encoding'])
-    print('  entities:', r['entity_counts'][:12])
-    print('  layers:', r['layer_counts'][:10])
-    print('  extents:', r['approx_extents'])
-    print('  keyword texts:')
-    for x in r['keyword_texts'][:20]:
-        print('   -', x['text'][:140])
+if VERBOSE:
+    for r in results:
+        print('\n'+Path(r['file']).name)
+        print('  size:', r['bytes'], 'acad:', r['acadver'], 'encoding:', r['encoding'])
+        print('  entities:', r['entity_counts'][:12])
+        print('  layers:', r['layer_counts'][:10])
+        print('  extents:', r['approx_extents'])
+        print('  keyword texts:')
+        for x in r['keyword_texts'][:20]:
+            print('   -', x['text'][:140])
