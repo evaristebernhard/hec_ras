@@ -2,7 +2,7 @@ PYTHON ?= .venv/bin/python
 LATEXMK ?= latexmk
 MPLCONFIGDIR ?= /tmp/hec_ras_matplotlib
 
-.PHONY: cad-intermediate processed evidence model-inputs audit-design-bed-hdf extract-results report-data report cad-dxf cad-dwg cad-package verify all
+.PHONY: cad-intermediate processed evidence model-inputs audit-hecras-inputs audit-design-bed-hdf extract-results report-data report cad-dxf cad-dwg cad-package verify all
 
 cad-intermediate:
 	$(PYTHON) scripts/convert_cad_sources.py
@@ -20,6 +20,9 @@ evidence:
 model-inputs: processed
 	$(PYTHON) scripts/build_hecras_project.py
 	$(PYTHON) scripts/build_hecras_boundary_sensitivity.py
+
+audit-hecras-inputs:
+	$(PYTHON) scripts/audit_hecras_inputs.py
 
 # p05 can be independently verified even while p01.hdf is absent.
 audit-design-bed-hdf:
@@ -49,9 +52,9 @@ cad-package: cad-dwg
 	$(PYTHON) scripts/package_design_bed_delivery.py
 
 # Current verification does not pretend the missing p01.hdf is available. It
-# verifies the frozen p01-p04 parity chain, the live CAD-direct p05 HDF, and the
-# direct-only CAD package.
-verify: audit-design-bed-hdf cad-package
+# verifies text-input integrity, the frozen p01-p04 parity chain, the live
+# CAD-direct p05 HDF, and the direct-only CAD package.
+verify: audit-hecras-inputs audit-design-bed-hdf cad-package
 	$(PYTHON) -m compileall -q scripts
 	$(PYTHON) scripts/verify_repository.py
 
