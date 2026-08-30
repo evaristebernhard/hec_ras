@@ -1,3 +1,0 @@
--r requirements.txt
-scipy>=1.14,<2
-stream1d==0.1.1

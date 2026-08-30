@@ -1,29 +1,22 @@
-# Python environment and caches
+# Python
 .venv/
 __pycache__/
 *.py[cod]
 
-# Source CAD is retained locally; Git tracks only derived evidence and delivery files.
+# Raw/intermediate CAD kept locally
 data/raw/cad/*
 !data/raw/cad/.gitkeep
 data/intermediate/dxf/*.dxf
 data/intermediate/dxf/*.dxf~
-data/intermediate/dxf/logs/
 data/intermediate/dxf/original-fonts/
 
-# HEC-RAS input text is versioned; solver run/HDF payloads remain local.
+# HEC-RAS runtime outputs: inputs are versioned, HDF/run files are local
 models/main/*.hdf
 models/main/*.O??
 models/main/*.r??
 models/main/*.data_errors.txt
-models/main/ras_prepare_dialogs.log
-models/boundary_sensitivity/*.hdf
-models/boundary_sensitivity/*.O??
-models/boundary_sensitivity/*.r??
-models/boundary_sensitivity/*.data_errors.txt
-models/boundary_sensitivity/ras_prepare_dialogs.log
 
-# LaTeX and rendering intermediates
+# LaTeX intermediates
 report/*.aux
 report/*.log
 report/*.toc
@@ -34,9 +27,8 @@ report/*.fdb_latexmk
 report/rendered/
 report/cad_render/
 
-# Editor/OS autosaves and local CAD font cache
+# Editor/OS noise
 .DS_Store
 Thumbs.db
 *~
-deliverables/cad/design_bed/\#*
 .librecad-fonts/

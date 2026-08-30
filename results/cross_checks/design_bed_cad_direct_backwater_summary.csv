@@ -1,4 +1,0 @@
-﻿solver,river_station,role,current_wse_m,design_bed_cad_wse_m,backwater_height_delta_wse_m,backwater_height_mm,status
-python_standard_step_crosscheck,600,upstream_100m_backwater,22.420322,22.647762,0.227440,227.4,CROSSCHECK_NOT_HECRAS
-python_standard_step_crosscheck,500,bridge_local_state,22.190000,21.952243,-0.237757,-237.8,CROSSCHECK_NOT_HECRAS
-python_standard_step_crosscheck,1000,upstream_500m_backwater,22.673001,22.889562,0.216561,216.6,CROSSCHECK_NOT_HECRAS
