@@ -145,6 +145,37 @@
 \label{fig:reach-schematic}
 \end{figure}
 
+\subsection{CAD 图纸证据视图}
+为提高报告的可追溯性，图~\ref{fig:cad-antiscour}--\ref{fig:cad-bridge-plan} 给出由原始 DWG 转换得到的 DXF 模型空间工程图视图。这些图由项目脚本直接解析 DXF 的 LINE、POLYLINE、CIRCLE、ARC 和文字实体后生成，\textbf{不是对 CAD 软件界面的伪造截图}；其用途是把“采用了哪些原始图纸信息”在报告中直观固定下来。原始 DWG/DXF 文件仍是最终图纸依据。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/cad_antiscour.png}
+\caption{抗冲刷防护图 CAD/DXF 局部视图，可见桥墩基础、防护构造及相关标注}
+\label{fig:cad-antiscour}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/cad_five_sections.png}
+\caption{赣江西支五个实测断面 CAD/DXF 视图}
+\label{fig:cad-five-sections}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/cad_contours.png}
+\caption{赣江西支桥位等值线 CAD/DXF 视图}
+\label{fig:cad-contours}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/cad_bridge_plan.png}
+\caption{西支成果图中的桥位 CAD/DXF 视图}
+\label{fig:cad-bridge-plan}
+\end{figure}
+
 \subsection{设计河床可追溯控制信息}
 现有 CAD 中未发现一条可直接追溯的完整跨河设计河床断面线，但抗冲刷图中的桥墩基础冲刷参数表给出了 15\#、16\#、17\# 桥墩设计泥面标高。程序通过桥墩中心线与实测桥下断面的交点，将这些高程映射到断面 station，结果见表~\ref{tab:pier-control}。
 
@@ -231,16 +262,7 @@
   \item 计算信息不得包含 warning 或 error。
 \end{enumerate}
 
-图~\ref{fig:hecras-gui} 为本项目 HEC-RAS 7.0.1 工程窗口的自动截取记录，仅截取软件窗口本身。
-
-\begin{figure}[H]
-\centering
-\IfFileExists{figures/hecras_project_window.png}{
-  \includegraphics[width=0.65\textwidth]{figures/hecras_project_window.png}
-}{\fbox{HEC-RAS 工程窗口截图待生成}}
-\caption{HEC-RAS 7.0.1 项目界面记录}
-\label{fig:hecras-gui}
-\end{figure}
+HEC-RAS GUI 截图不作为当前版本的核心验收证据。现阶段以工程输入文件、计算 HDF、计算完成信息以及上述自动验收条件作为可复现依据；待后续获得稳定的软件窗口自动化流程后，再补充界面截图而不影响本报告数值结论。
 
 \section{五工况正式计算结果}
 
@@ -507,13 +529,15 @@ Z_{d,\mathrm{high}} &= 22.549342~m.
 \path{scripts/build_hecras_boundary_sensitivity.py} & 下游边界敏感性工程生成。 \\
 \path{scripts/audit_bridge_geometry_evidence.py} & 显式桥梁结构资料审计。 \\
 \path{scripts/build_report_data.py} & 从正式结果自动生成本报告绘图数据。 \\
+\path{scripts/render_dxf_cad_views.py} & 从原始 DXF 直接生成报告中的 CAD 工程图视图 PNG/PDF。 \\
 \bottomrule
 \end{longtable}
 
-复现报告数据：
+复现报告数据与 CAD 图纸视图：
 \begin{verbatim}
 .venv/bin/python scripts/recover_design_bed.py
 .venv/bin/python scripts/build_report_data.py
+python3 scripts/render_dxf_cad_views.py
 cd report
 xelatex -interaction=nonstopmode main.tex
 xelatex -interaction=nonstopmode main.tex

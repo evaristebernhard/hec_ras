@@ -1,6 +1,7 @@
 # Python environments/cache
 .venv/
 .venv-hecras/
+.venv-cad/
 __pycache__/
 *.py[cod]
 
@@ -34,6 +35,13 @@ report/*.xdv
 report/*.fls
 report/*.fdb_latexmk
 report/rendered/
+report/cad_render/
+
+# Temporary transfer/chunk artifacts
+report/*.b64
+report/pdfchunk_*
+report/s2_*.txt
+report/shotchunk_*.txt
 
 # OS/editor noise
 .DS_Store
