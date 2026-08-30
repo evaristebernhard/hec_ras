@@ -1,0 +1,7 @@
+﻿dwg,design_layer,expected_vertices,roundtrip_vertices,max_xy_error_cad_units,max_xy_error_m,entity_LINE,entity_TEXT,entity_LWPOLYLINE,entity_CIRCLE,chinese_bridge_label_preserved,chinese_upstream500_label_preserved
+西支5断面_桥下设计河床_三方案叠加_R2004.dwg,DESIGN_CENTER,330,330,5.20625146455e-10,5.20625146455e-11,682,690,177,3,True,True
+西支5断面_桥下设计河床_三方案叠加_R2004.dwg,DESIGN_LOCAL,319,319,5.20625146455e-10,5.20625146455e-11,682,690,177,3,True,True
+西支5断面_桥下设计河床_三方案叠加_R2004.dwg,DESIGN_DISTRIBUTED,353,353,5.20625146455e-10,5.20625146455e-11,682,690,177,3,True,True
+西支5断面_桥下设计河床_中心方案_叠加_R2004.dwg,DESIGN_CENTER,330,330,5.20625146455e-10,5.20625146455e-11,682,690,175,3,True,True
+西支5断面_桥下设计河床_分布型_叠加_R2004.dwg,DESIGN_DISTRIBUTED,353,353,5.20625146455e-10,5.20625146455e-11,682,690,175,3,True,True
+西支5断面_桥下设计河床_局部型_叠加_R2004.dwg,DESIGN_LOCAL,319,319,5.20625146455e-10,5.20625146455e-11,682,690,175,3,True,True

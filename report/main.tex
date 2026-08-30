@@ -483,7 +483,7 @@ Z_{d,\mathrm{high}} &= 22.549342~m.
   \item 获取桥梁总体布置图/立面图，重点核实梁底或低弦高程、桥面高程、墩身迎水尺寸；
   \item 获取正式设计洪水控制水位或水位--流量关系；
   \item 获取 Manning $n$ 的项目依据，并做最终粗糙率校准；
-  \item 如成果要求提交正式设计河床 DWG/DXF，应以原始设计线或设计人员正式整治线为准；
+  \item 当前已输出三种水力筛选重建的 DXF/DWG 交付文件，可用于复核和后续设计；若成果要求施工/审图意义上的正式设计河床，仍应由有权设计人员确认或出具正式整治线；
   \item 只有在任务明确要求桥墩局部最大流速、冲刷或防护体局部流场时，再升级局部二维模型。
 \end{enumerate}
 
@@ -504,6 +504,7 @@ Z_{d,\mathrm{high}} &= 22.549342~m.
 \path{results/hecras_design_bed_sensitivity.csv} & 三种设计河床重建敏感性。 \\
 \path{results/hecras_boundary_sensitivity.csv} & 15 个下游边界敏感性 plan 明细。 \\
 \path{data/processed/design_bed/} & 设计河床重建、CAD 证据和审计记录。 \\
+\path{deliverables/cad/design_bed/} & 设计河床 CAD 交付包：独立 DXF、叠加原五断面 DXF、R2004 DWG 兼容副本及往返校验。 \\
 \path{scripts/recover_design_bed.py} & 设计泥面控制点恢复与断面重建。 \\
 \path{scripts/build_hecras_project.py} & 正式 HEC-RAS 工程生成。 \\
 \path{scripts/extract_hecras_steady_results.py} & HDF 验收与五工况结果整理。 \\
@@ -512,6 +513,8 @@ Z_{d,\mathrm{high}} &= 22.549342~m.
 \path{scripts/build_report_data.py} & 从正式结果自动生成本报告绘图数据。 \\
 \path{scripts/render_dxf_cad_views.py} & 使用 Matplotlib 从原始 DXF 直接生成彩色 CAD 工程图视图 PNG/PDF。 \\
 \path{scripts/render_design_bed_figure.py} & 生成现状断面与三种自行构造设计河床重建的彩色对比图。 \\
+\path{scripts/export_design_bed_cad.py} & 将三种设计河床回写原五断面 CAD 坐标并生成可编辑 DXF。 \\
+\path{scripts/build_design_bed_dwg_delivery.py} & 从完整叠加 DXF 生成 R2004 DWG，并执行 DWG--DXF 往返几何与中文标签校验。 \\
 \bottomrule
 \end{longtable}
 
@@ -521,6 +524,8 @@ Z_{d,\mathrm{high}} &= 22.549342~m.
 .venv/bin/python scripts/build_report_data.py
 .venv/bin/python scripts/render_design_bed_figure.py
 .venv/bin/python scripts/render_dxf_cad_views.py
+.venv/bin/python scripts/export_design_bed_cad.py
+.venv/bin/python scripts/build_design_bed_dwg_delivery.py
 cd report
 xelatex -interaction=nonstopmode main.tex
 xelatex -interaction=nonstopmode main.tex
