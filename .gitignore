@@ -15,10 +15,12 @@ data/intermediate/dxf/original-fonts/
 models/main/*.hdf
 models/main/*.O??
 models/main/*.r??
+models/main/*.data_errors.txt
 models/main/ras_prepare_dialogs.log
 models/boundary_sensitivity/*.hdf
 models/boundary_sensitivity/*.O??
 models/boundary_sensitivity/*.r??
+models/boundary_sensitivity/*.data_errors.txt
 models/boundary_sensitivity/ras_prepare_dialogs.log
 
 # LaTeX and rendering intermediates
