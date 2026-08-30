@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-"""Render selected CAD/DXF model-space windows into report-ready PNGs.
+"""Render selected DXF model-space windows as colored report figures.
 
-This intentionally uses only the Python standard library plus the system XeLaTeX
-and Poppler executables.  It is therefore reproducible in the project Linux
-environment without AutoCAD/LibreCAD or third-party Python packages.
-
-The renderer covers the entities that dominate the supplied drawings:
-LINE, LWPOLYLINE, POLYLINE/VERTEX, CIRCLE, ARC and TEXT/MTEXT.  INSERT/HATCH/
-DIMENSION are not exploded; the output is an evidence view, not a replacement
-for the source CAD drawing.
+The project intentionally avoids requiring AutoCAD/LibreCAD for evidence figures.
+This renderer parses the dominant DXF entities directly and uses matplotlib to
+produce reproducible PNG/PDF output.  It is an evidence renderer, not a full CAD
+engine: INSERT/HATCH/DIMENSION are not exploded.
 """
 from __future__ import annotations
 
@@ -16,12 +12,26 @@ from dataclasses import dataclass
 from pathlib import Path
 import math
 import re
-import subprocess
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.collections import LineCollection
+from matplotlib.patches import Circle, Arc
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 DXF_DIR = ROOT / "data" / "dxf"
-OUT_DIR = ROOT / "report" / "cad_render"
 FIG_DIR = ROOT / "report" / "figures"
+PDF_DIR = ROOT / "report" / "cad_render"
+
+plt.rcParams.update({
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Noto Sans CJK SC", "Noto Sans CJK JP", "DejaVu Sans"],
+    "axes.unicode_minus": False,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fbfcfe",
+})
 
 
 @dataclass(frozen=True)
@@ -34,6 +44,7 @@ class View:
     ymax: float
     title: str
     max_text: int = 80
+    mode: str = "engineering"
 
 
 VIEWS = [
@@ -43,6 +54,7 @@ VIEWS = [
         -50250, -47850, 59600, 61650,
         "抗冲刷防护 CAD 局部视图",
         90,
+        "engineering",
     ),
     View(
         "cad_five_sections",
@@ -50,6 +62,7 @@ VIEWS = [
         390600, 394700, 3188200, 3192350,
         "赣江西支五断面 CAD 视图",
         100,
+        "sections",
     ),
     View(
         "cad_contours",
@@ -57,6 +70,7 @@ VIEWS = [
         -85, 280, -112, 95,
         "赣江西支桥位等值线 CAD 视图",
         70,
+        "contours",
     ),
     View(
         "cad_bridge_plan",
@@ -64,34 +78,24 @@ VIEWS = [
         396700, 400050, 3187700, 3191000,
         "西支成果桥位 CAD 视图",
         80,
+        "plan",
     ),
 ]
 
 
 def recover_text(s: str) -> str:
-    """Best-effort recovery of GBK text that was decoded as latin-1."""
     s = s.replace("\\P", " ").replace("\\~", " ")
     s = re.sub(r"\\[A-Za-z][^;]*;", "", s)
     s = re.sub(r"\{\\[^}]*\}", "", s)
     try:
         raw = s.encode("latin1")
-        s2 = raw.decode("gb18030")
-        if s2:
-            s = s2
+        recovered = raw.decode("gb18030")
+        if recovered:
+            s = recovered
     except (UnicodeEncodeError, UnicodeDecodeError):
         pass
-    s = re.sub(r"\s+", " ", s).strip()
-    return s
-
-
-def tex_escape(s: str) -> str:
-    repl = {
-        "\\": r"\textbackslash{}",
-        "{": r"\{", "}": r"\}",
-        "#": r"\#", "$": r"\$", "%": r"\%", "&": r"\&",
-        "_": r"\_", "^": r"\textasciicircum{}", "~": r"\textasciitilde{}",
-    }
-    return "".join(repl.get(ch, ch) for ch in s)
+    s = "".join(ch for ch in s if ord(ch) >= 32 and not 127 <= ord(ch) <= 159)
+    return re.sub(r"\s+", " ", s).strip()
 
 
 def iter_pairs(path: Path):
@@ -125,19 +129,12 @@ def ival(fields, code, default=0):
     return int(v) if v is not None else default
 
 
-def sval(fields, code, default=""):
-    for c, v in fields:
-        if c == code:
-            return v
-    return default
-
-
-def bbox_intersects(v: View, xs, ys, pad=0.0):
+def bbox_intersects(v: View, xs, ys):
     if not xs or not ys:
         return False
     return not (
-        max(xs) < v.xmin - pad or min(xs) > v.xmax + pad or
-        max(ys) < v.ymin - pad or min(ys) > v.ymax + pad
+        max(xs) < v.xmin or min(xs) > v.xmax or
+        max(ys) < v.ymin or min(ys) > v.ymax
     )
 
 
@@ -152,7 +149,6 @@ def parse_for_view(path: Path, view: View):
     arcs = []
     texts = []
 
-    section = None
     in_entities = False
     current_type = None
     fields = []
@@ -162,8 +158,14 @@ def parse_for_view(path: Path, view: View):
         nonlocal active_poly
         if active_poly and len(active_poly["pts"]) >= 2:
             pts = active_poly["pts"]
-            if bbox_intersects(view, [p[0] for p in pts], [p[1] for p in pts]):
-                polys.append((pts, active_poly["closed"]))
+            xs = [p[0] for p in pts]
+            ys = [p[1] for p in pts]
+            if bbox_intersects(view, xs, ys):
+                polys.append({
+                    "pts": pts,
+                    "closed": active_poly["closed"],
+                    "layer": active_poly.get("layer", ""),
+                })
         active_poly = None
 
     def flush_entity():
@@ -173,50 +175,63 @@ def parse_for_view(path: Path, view: View):
             fields = []
             return
         typ = current_type
+        layer = next((v for c, v in fields if c == 8), "")
         if typ == "POLYLINE":
             finalize_active_poly()
-            active_poly = {"pts": [], "closed": bool(ival(fields, 70, 0) & 1)}
+            active_poly = {
+                "pts": [],
+                "closed": bool(ival(fields, 70, 0) & 1),
+                "layer": layer,
+            }
         elif typ == "VERTEX" and active_poly is not None:
             x, y = fval(fields, 10), fval(fields, 20)
+            z = fval(fields, 30, 0.0)
             if x is not None and y is not None:
-                active_poly["pts"].append((x, y))
+                active_poly["pts"].append((x, y, z if z is not None else 0.0))
         elif typ == "SEQEND":
             finalize_active_poly()
         elif typ == "LINE":
             x1, y1, x2, y2 = fval(fields, 10), fval(fields, 20), fval(fields, 11), fval(fields, 21)
             if None not in (x1, y1, x2, y2) and bbox_intersects(view, [x1, x2], [y1, y2]):
-                lines.append((x1, y1, x2, y2))
+                lines.append((x1, y1, x2, y2, layer))
         elif typ == "LWPOLYLINE":
             pts = []
             pending_x = None
+            pending_y = None
             for c, raw in fields:
                 if c == 10:
-                    try: pending_x = float(raw)
-                    except ValueError: pending_x = None
+                    try:
+                        pending_x = float(raw)
+                    except ValueError:
+                        pending_x = None
                 elif c == 20 and pending_x is not None:
-                    try: pts.append((pending_x, float(raw)))
-                    except ValueError: pass
+                    try:
+                        pending_y = float(raw)
+                    except ValueError:
+                        pending_y = None
+                    if pending_y is not None:
+                        pts.append((pending_x, pending_y, 0.0))
                     pending_x = None
             if len(pts) >= 2 and bbox_intersects(view, [p[0] for p in pts], [p[1] for p in pts]):
-                polys.append((pts, bool(ival(fields, 70, 0) & 1)))
+                polys.append({"pts": pts, "closed": bool(ival(fields, 70, 0) & 1), "layer": layer})
         elif typ == "CIRCLE":
             x, y, r = fval(fields, 10), fval(fields, 20), fval(fields, 40)
             if None not in (x, y, r) and bbox_intersects(view, [x-r, x+r], [y-r, y+r]):
-                circles.append((x, y, r))
+                circles.append((x, y, r, layer))
         elif typ == "ARC":
             x, y, r = fval(fields, 10), fval(fields, 20), fval(fields, 40)
             a0, a1 = fval(fields, 50, 0.0), fval(fields, 51, 360.0)
             if None not in (x, y, r) and bbox_intersects(view, [x-r, x+r], [y-r, y+r]):
-                arcs.append((x, y, r, a0, a1))
+                arcs.append((x, y, r, a0, a1, layer))
         elif typ in ("TEXT", "MTEXT") and len(texts) < view.max_text:
             x, y = fval(fields, 10), fval(fields, 20)
             if x is not None and y is not None and inside(view, x, y):
                 chunks = [val for c, val in fields if c in (1, 3)]
                 txt = recover_text("".join(chunks))
                 if txt:
-                    if len(txt) > 48:
-                        txt = txt[:45] + "…"
-                    texts.append((x, y, txt))
+                    if len(txt) > 42:
+                        txt = txt[:39] + "…"
+                    texts.append((x, y, txt, layer))
         current_type = None
         fields = []
 
@@ -228,13 +243,11 @@ def parse_for_view(path: Path, view: View):
                 c2, v2 = next(pairs)
             except StopIteration:
                 break
-            section = v2 if c2 == 2 else None
-            in_entities = section == "ENTITIES"
+            in_entities = c2 == 2 and v2 == "ENTITIES"
             continue
         if code == 0 and value == "ENDSEC":
             flush_entity()
             finalize_active_poly()
-            section = None
             in_entities = False
             continue
         if in_entities and code == 0:
@@ -248,104 +261,100 @@ def parse_for_view(path: Path, view: View):
     return lines, polys, circles, arcs, texts
 
 
-def transform(view: View):
-    max_w, max_h = 24.0, 15.0
-    sx = max_w / (view.xmax - view.xmin)
-    sy = max_h / (view.ymax - view.ymin)
-    s = min(sx, sy)
-    draw_w = (view.xmax - view.xmin) * s
-    draw_h = (view.ymax - view.ymin) * s
-    ox = (max_w - draw_w) / 2.0
-    oy = (max_h - draw_h) / 2.0
+def poly_color(view: View, poly, index: int, n: int):
+    if view.mode == "contours":
+        zs = np.asarray([p[2] for p in poly["pts"]], dtype=float)
+        finite = zs[np.isfinite(zs)]
+        if finite.size and np.ptp(finite) > 1e-9:
+            z = float(np.nanmedian(finite))
+            t = (z - np.nanmin(finite)) / max(np.ptp(finite), 1e-9)
+        else:
+            t = index / max(n - 1, 1)
+        return plt.colormaps["viridis"](0.10 + 0.80 * t)
+    if view.mode == "sections":
+        return "#1677a8"
+    if view.mode == "plan":
+        return "#0f766e"
+    return "#2563eb"
 
-    def xy(x, y):
-        return ox + (x - view.xmin) * s, oy + (y - view.ymin) * s
-    return xy, s
 
-
-def render_tex(view: View, primitives):
+def render_view(view: View, primitives):
     lines, polys, circles, arcs, texts = primitives
-    xy, scale = transform(view)
-    out = OUT_DIR / f"{view.key}.tex"
-    source = tex_escape(view.source)
-    title = tex_escape(view.title)
-    cmds = []
-    cmds.append(r"\documentclass[UTF8]{ctexart}")
-    cmds.append(r"\usepackage[paperwidth=27cm,paperheight=19cm,margin=1cm]{geometry}")
-    cmds.append(r"\usepackage{tikz}")
-    cmds.append(r"\usepackage{xcolor}")
-    cmds.append(r"\pagestyle{empty}")
-    cmds.append(r"\setlength{\parindent}{0pt}")
-    cmds.append(r"\begin{document}")
-    cmds.append(r"\begin{center}")
-    cmds.append(rf"{{\Large\bfseries {title}}}\\[2mm]")
-    cmds.append(r"\begin{tikzpicture}[line cap=round,line join=round]")
-    cmds.append(r"\path[use as bounding box] (0,0) rectangle (24,15);")
-    cmds.append(r"\draw[line width=0.35pt] (0,0) rectangle (24,15);")
-    cmds.append(r"\begin{scope}")
-    cmds.append(r"\clip (0,0) rectangle (24,15);")
-    for x1, y1, x2, y2 in lines:
-        a, b = xy(x1, y1), xy(x2, y2)
-        cmds.append(rf"\draw[line width=0.13pt] ({a[0]:.4f},{a[1]:.4f}) -- ({b[0]:.4f},{b[1]:.4f});")
-    for pts, closed in polys:
-        q = [xy(x, y) for x, y in pts]
-        if len(q) > 1200:
-            q = q[::max(1, len(q)//1200)]
-        path = " -- ".join(f"({x:.4f},{y:.4f})" for x, y in q)
-        if closed:
-            path += " -- cycle"
-        cmds.append(rf"\draw[line width=0.13pt] {path};")
-    for x, y, r in circles:
-        c = xy(x, y)
-        cmds.append(rf"\draw[line width=0.13pt] ({c[0]:.4f},{c[1]:.4f}) circle ({r*scale:.4f});")
-    for x, y, r, a0, a1 in arcs:
+    FIG_DIR.mkdir(parents=True, exist_ok=True)
+    PDF_DIR.mkdir(parents=True, exist_ok=True)
+
+    fig, ax = plt.subplots(figsize=(13.5, 8.5), dpi=180)
+    ax.set_xlim(view.xmin, view.xmax)
+    ax.set_ylim(view.ymin, view.ymax)
+    ax.set_aspect("equal", adjustable="box")
+    ax.set_title(view.title, fontsize=17, fontweight="bold", pad=14)
+
+    if lines:
+        segments = [[(x1, y1), (x2, y2)] for x1, y1, x2, y2, _ in lines]
+        lc = LineCollection(segments, colors="#64748b", linewidths=0.55, alpha=0.82, zorder=2)
+        ax.add_collection(lc)
+
+    for idx, poly in enumerate(polys):
+        pts = np.asarray([(p[0], p[1]) for p in poly["pts"]], dtype=float)
+        if pts.shape[0] > 1800:
+            step = max(1, pts.shape[0] // 1800)
+            pts = pts[::step]
+        color = poly_color(view, poly, idx, len(polys))
+        lw = 0.75 if view.mode != "contours" else 0.65
+        ax.plot(pts[:, 0], pts[:, 1], color=color, linewidth=lw, alpha=0.90, zorder=3)
+        if poly["closed"] and pts.shape[0] >= 3:
+            ax.plot([pts[-1,0], pts[0,0]], [pts[-1,1], pts[0,1]], color=color, linewidth=lw, alpha=0.90, zorder=3)
+
+    for x, y, r, _ in circles:
+        ax.add_patch(Circle((x, y), r, fill=False, edgecolor="#e67e22", linewidth=0.8, alpha=0.95, zorder=4))
+    for x, y, r, a0, a1, _ in arcs:
         if a1 < a0:
             a1 += 360.0
-        p0 = xy(x + r*math.cos(math.radians(a0)), y + r*math.sin(math.radians(a0)))
-        rr = r * scale
-        cmds.append(rf"\draw[line width=0.13pt] ({p0[0]:.4f},{p0[1]:.4f}) arc[start angle={a0:.3f},end angle={a1:.3f},radius={rr:.4f}];")
-    for x, y, txt in texts:
-        p = xy(x, y)
-        cmds.append(rf"\node[anchor=west,scale=0.32,fill=white,inner sep=0.3pt] at ({p[0]:.4f},{p[1]:.4f}) {{{tex_escape(txt)}}};")
-    cmds.append(r"\end{scope}")
-    cmds.append(r"\end{tikzpicture}\\[1mm]")
-    cmds.append(rf"{{\footnotesize 来源：\texttt{{{source}}}；DXF model-space 程序化渲染。}}")
-    cmds.append(r"\end{center}")
-    cmds.append(r"\end{document}")
-    out.write_text("\n".join(cmds) + "\n", encoding="utf-8")
-    return out
+        ax.add_patch(Arc((x, y), 2*r, 2*r, theta1=a0, theta2=a1,
+                         edgecolor="#dc2626", linewidth=0.85, alpha=0.95, zorder=4))
 
+    xrange = view.xmax - view.xmin
+    yrange = view.ymax - view.ymin
+    fs = 6.1 if view.mode != "contours" else 5.4
+    for x, y, txt, _ in texts:
+        ax.text(x, y, txt, fontsize=fs, color="#111827", zorder=6,
+                bbox=dict(boxstyle="round,pad=0.10", facecolor="white", edgecolor="none", alpha=0.72))
 
-def compile_view(tex_path: Path, view: View):
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    FIG_DIR.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        ["xelatex", "-interaction=nonstopmode", "-halt-on-error", tex_path.name],
-        cwd=OUT_DIR, check=True, stdout=subprocess.DEVNULL,
-    )
-    pdf = OUT_DIR / f"{view.key}.pdf"
-    png_prefix = FIG_DIR / view.key
-    subprocess.run(
-        ["pdftoppm", "-singlefile", "-png", "-r", "180", str(pdf), str(png_prefix)],
-        check=True, stdout=subprocess.DEVNULL,
-    )
-    return pdf, png_prefix.with_suffix(".png")
+    ax.grid(True, color="#dbe3ec", linewidth=0.5, alpha=0.55)
+    ax.tick_params(labelsize=8, colors="#475569")
+    for spine in ax.spines.values():
+        spine.set_color("#94a3b8")
+        spine.set_linewidth(0.8)
+
+    legend_text = "灰：辅助直线   蓝/绿：主要折线   橙：圆形结构   红：圆弧结构"
+    if view.mode == "contours":
+        legend_text = "等值线采用连续色带区分；灰线为其他辅助实体"
+    ax.text(0.01, 0.015, legend_text, transform=ax.transAxes, fontsize=8.5,
+            color="#334155", va="bottom", ha="left",
+            bbox=dict(boxstyle="round,pad=0.28", facecolor="#f8fafc", edgecolor="#cbd5e1", alpha=0.96))
+    ax.text(0.99, 0.015, f"来源：{view.source} · DXF model-space 程序化渲染",
+            transform=ax.transAxes, fontsize=7.5, color="#64748b", va="bottom", ha="right")
+
+    fig.tight_layout(pad=1.0)
+    png = FIG_DIR / f"{view.key}.png"
+    pdf = PDF_DIR / f"{view.key}.pdf"
+    fig.savefig(png, dpi=220, bbox_inches="tight", facecolor="white")
+    fig.savefig(pdf, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return png, pdf
 
 
 def main():
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    FIG_DIR.mkdir(parents=True, exist_ok=True)
     for view in VIEWS:
         src = DXF_DIR / view.source
         if not src.exists():
             raise FileNotFoundError(src)
         primitives = parse_for_view(src, view)
         counts = [len(x) for x in primitives]
-        tex = render_tex(view, primitives)
-        pdf, png = compile_view(tex, view)
+        png, pdf = render_view(view, primitives)
         print(f"{view.key}: lines={counts[0]} polys={counts[1]} circles={counts[2]} arcs={counts[3]} texts={counts[4]}")
-        print(f"  -> {pdf.relative_to(ROOT)}")
         print(f"  -> {png.relative_to(ROOT)}")
+        print(f"  -> {pdf.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

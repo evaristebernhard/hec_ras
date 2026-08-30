@@ -203,31 +203,12 @@
   \item 控制点之间采用平滑、最小变形的受约束重建。
 \end{enumerate}
 
-为检验补线方式对结果的影响，另构造“局部型”和“分布型”两种重建，三种方案见图~\ref{fig:design-bed}。
+为检验补线方式对结果的影响，本项目在同一组硬约束下构造“中心方案”“局部型”和“分布型”三种水力筛选重建。三种方案与现状断面的几何关系见图~\ref{fig:design-bed}。需要特别强调：图中的三条设计河床线是\textbf{本项目为敏感性分析自行构造的三种受约束重建方案}，并非原设计院提供的三套正式设计河床线。
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-  width=0.94\textwidth,height=8.0cm,
-  xlabel={断面 station (m)},ylabel={高程 (m)},
-  grid=major,legend pos=south east,
-  xmin=0,xmax=480,ymin=-2,ymax=24,
-  every axis plot/.append style={thick}
-]
-\addplot table[x=station_m,y=elevation_m]{data/current_section.dat};
-\addlegendentry{现状桥下断面}
-\addplot table[x=station_m,y=elevation_m]{data/design_center_section.dat};
-\addlegendentry{设计河床-中心方案}
-\addplot table[x=station_m,y=elevation_m]{data/design_local_section.dat};
-\addlegendentry{设计河床-局部型}
-\addplot table[x=station_m,y=elevation_m]{data/design_distributed_section.dat};
-\addlegendentry{设计河床-分布型}
-\addplot+[only marks,mark=*,mark size=2.5pt] table[x=station_m,y=design_elev_m]{data/pier_controls.dat};
-\addlegendentry{15/16/17\#设计控制点}
-\end{axis}
-\end{tikzpicture}
-\caption{现状桥下断面与三种受约束设计河床重建}
+\includegraphics[width=0.98\textwidth]{figures/design_bed_schemes.pdf}
+\caption{现状桥下断面、三种自行构造的受约束设计河床重建及 15/16/17\# 设计泥面控制点}
 \label{fig:design-bed}
 \end{figure}
 
@@ -529,15 +510,17 @@ Z_{d,\mathrm{high}} &= 22.549342~m.
 \path{scripts/build_hecras_boundary_sensitivity.py} & 下游边界敏感性工程生成。 \\
 \path{scripts/audit_bridge_geometry_evidence.py} & 显式桥梁结构资料审计。 \\
 \path{scripts/build_report_data.py} & 从正式结果自动生成本报告绘图数据。 \\
-\path{scripts/render_dxf_cad_views.py} & 从原始 DXF 直接生成报告中的 CAD 工程图视图 PNG/PDF。 \\
+\path{scripts/render_dxf_cad_views.py} & 使用 Matplotlib 从原始 DXF 直接生成彩色 CAD 工程图视图 PNG/PDF。 \\
+\path{scripts/render_design_bed_figure.py} & 生成现状断面与三种自行构造设计河床重建的彩色对比图。 \\
 \bottomrule
 \end{longtable}
 
-复现报告数据与 CAD 图纸视图：
+复现报告数据、设计河床图与彩色 CAD 图纸视图：
 \begin{verbatim}
 .venv/bin/python scripts/recover_design_bed.py
 .venv/bin/python scripts/build_report_data.py
-python3 scripts/render_dxf_cad_views.py
+.venv/bin/python scripts/render_design_bed_figure.py
+.venv/bin/python scripts/render_dxf_cad_views.py
 cd report
 xelatex -interaction=nonstopmode main.tex
 xelatex -interaction=nonstopmode main.tex
